@@ -1,6 +1,6 @@
 {
-  "name": "Rate",
-  "short_name": "Rate",
+  "name": "Crypto Converter",
+  "short_name": "Crypto Converter",
   "description": "Crypto converter for Bitcoin, satoshis, Ethereum, Solana, XRP, and other coins into dollars, euro, yen, yuan, colón, and kroner.",
   "start_url": ".",
   "scope": ".",

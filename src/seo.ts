@@ -26,7 +26,7 @@ export const FAQ = [
   {
     question: 'Does the amount I type get uploaded?',
     answer:
-      'No. The amount stays in this browser. The page asks CoinGecko for public prices only, and that request does not include what you typed. There is no account, no wallet connection, no cookie, and no tracker.',
+      'No. The amount stays in this browser. The page asks CoinGecko for public prices only, and that request does not include what you typed. There is no account and no wallet connection. Vercel Analytics counts the visit and does not receive the amount.',
   },
   {
     question: 'Where do the crypto prices come from?',

@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#0000F0"/>
-  <rect x="4" y="4" width="6" height="6" fill="#E8E6D8"/>
-  <rect x="6" y="14" width="20" height="4" fill="#E8E6D8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#0000F0"/>
+  <rect x="7" y="7" width="6" height="6" fill="#E8E6D8"/>
+  <text x="32" y="30" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-size="13" font-weight="700" font-style="italic" fill="#E8E6D8">CRYPTO</text>
+  <text x="32" y="46" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-size="11" font-weight="700" font-style="italic" fill="#E8E6D8">CONVERTER</text>
 </svg>

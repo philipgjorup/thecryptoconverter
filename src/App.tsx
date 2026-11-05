@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   ASSET_MAP,
   COINS,
   FIATS,
   type Asset,
+  type Kind,
   type Rates,
   convert,
   fetchRates,
@@ -13,6 +14,7 @@ import {
   readCache,
   writeCache,
 } from './market'
+import { COIN_MARKS, TOP_100_LINE } from './decor'
 import { FAQ, PAGE_DESCRIPTION, SPONSOR } from './seo'
 
 const WAVE_PATHS = Array.from({ length: 16 }, (_, i) => {
@@ -46,6 +48,21 @@ function readFrom() {
   return 'btc'
 }
 
+function defaultInto(fromId: string) {
+  return ASSET_MAP[fromId]?.kind === 'coin' ? 'usd' : 'btc'
+}
+
+function readInto(fromId: string) {
+  try {
+    const stored = localStorage.getItem('rate:into')
+    const fromKind = ASSET_MAP[fromId]?.kind
+    if (stored && ASSET_MAP[stored] && ASSET_MAP[stored].kind !== fromKind) return stored
+  } catch {
+    /* ignore */
+  }
+  return defaultInto(fromId)
+}
+
 async function copyText(text: string) {
   try {
     await navigator.clipboard.writeText(text)
@@ -71,22 +88,36 @@ async function copyText(text: string) {
 export function App() {
   const [amount, setAmount] = useState(readAmount)
   const [from, setFrom] = useState(readFrom)
+  const [into, setInto] = useState(() => readInto(readFrom()))
+  const [alsoOpen, setAlsoOpen] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 980px)').matches,
+  )
   const [rates, setRates] = useState<Rates | null>(readCache)
   const [phase, setPhase] = useState<'loading' | 'ready' | 'error'>(readCache() ? 'ready' : 'loading')
   const [notice, setNotice] = useState<string | null>(null)
   const [hot, setHot] = useState<string | null>(null)
   const [now, setNow] = useState(() => Date.now())
   const inputRef = useRef<HTMLInputElement>(null)
+  const chipsRef = useRef<HTMLDivElement>(null)
   const noticeTimer = useRef(0)
 
   useEffect(() => {
     try {
       localStorage.setItem('rate:amount', amount)
       localStorage.setItem('rate:from', from)
+      localStorage.setItem('rate:into', into)
     } catch {
       /* ignore */
     }
-  }, [amount, from])
+  }, [amount, from, into])
+
+  useEffect(() => {
+    const root = chipsRef.current
+    const chip = root?.querySelector<HTMLElement>('[aria-pressed="true"]')
+    if (!root || !chip) return
+    const left = chip.offsetLeft - (root.clientWidth - chip.offsetWidth) / 2
+    root.scrollTo({ left: Math.max(0, left) })
+  }, [from])
 
   useEffect(() => {
     const id = window.setInterval(() => setNow(Date.now()), 5000)
@@ -143,19 +174,25 @@ export function App() {
 
   const parsed = parseAmount(amount)
   const source = ASSET_MAP[from]
+  const targets = source.kind === 'coin' ? FIATS : COINS
+  const featured = targets.find((asset) => asset.id === into) ?? targets[0]
+  const sameKind = (source.kind === 'coin' ? COINS : FIATS).filter((asset) => asset.id !== from)
+  const price = (asset: Asset) => (rates ? convert(parsed, from, asset.id, rates) : null)
+  const featuredValue = price(featured)
+  const intoWords = source.kind === 'coin' ? 'currency' : 'coins'
+  const sameWords = source.kind === 'coin' ? 'other coins' : 'other currencies'
 
-  const board = useMemo(() => {
-    const primary = source.kind === 'coin' ? FIATS : COINS
-    const secondary = (source.kind === 'coin' ? COINS : FIATS).filter((asset) => asset.id !== from)
-    const price = (asset: Asset) => (rates ? convert(parsed, from, asset.id, rates) : null)
-    return {
-      primary,
-      secondary,
-      heading: source.kind === 'coin' ? 'In cash' : 'In coins',
-      also: source.kind === 'coin' ? 'Also in coins' : 'Also in currency',
-      price,
+  function chooseKind(kind: Kind) {
+    if (source.kind === kind) return
+    if (featured.kind === kind) {
+      setFrom(featured.id)
+      setInto(from)
+      return
     }
-  }, [from, parsed, rates, source.kind])
+    const nextFrom = kind === 'coin' ? 'btc' : 'usd'
+    setFrom(nextFrom)
+    setInto(defaultInto(nextFrom))
+  }
 
   function showNotice(text: string) {
     setNotice(text)
@@ -185,19 +222,30 @@ export function App() {
 
   return (
     <div className="page">
-      <p className="spine spine-l" aria-hidden="true">
-        BTC · SATS · ETH · USDT · BNB · XRP · USDC · SOL · TRX · DOGE · ZEC · XMR · HYPE · NEAR
-      </p>
-      <p className="spine spine-r" aria-hidden="true">
-        USD · EURO · YEN · YUAN · CRC · DKK
-      </p>
+      <div className="spine spine-l" aria-hidden="true">
+        <p className="spine-run">
+          {TOP_100_LINE}
+          {' · '}
+          {TOP_100_LINE}
+        </p>
+      </div>
+      <div className="spine spine-r" aria-hidden="true">
+        <div className="mark-run">
+          {[0, 1, 2, 3].map((copy) => (
+            <div className="mark-set" key={copy}>
+              {COIN_MARKS.map((mark) => (
+                <img key={`${copy}-${mark.id}`} src={mark.src} alt="" width="22" height="22" />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
 
       <main className="sheet">
         <header className="top">
-          <div>
-            <h1 className="eyebrow">Crypto converter</h1>
-            <p className="logo">Rate</p>
-          </div>
+          <h1 className="logo">
+            <span>Crypto</span> <span>converter</span>
+          </h1>
           <div className="status">
             <p>
               <i className={fresh ? 'mark is-fresh' : 'mark'} aria-hidden="true" />
@@ -213,7 +261,7 @@ export function App() {
         <div className="workspace">
           <section className="controls" aria-label="Amount">
             <label className="amount-label" htmlFor="amount">
-              Amount
+              You have
             </label>
             <input
               id="amount"
@@ -224,25 +272,51 @@ export function App() {
               autoCorrect="off"
               spellCheck={false}
               value={amount}
-              aria-describedby="asset-name"
+              aria-describedby="convert-hint"
               onFocus={(event) => event.currentTarget.select()}
               onChange={(event) => {
                 const next = event.target.value
                 if (/^[0-9.,\s']*$/.test(next) && next.length <= 24) setAmount(next)
               }}
             />
-            <p id="asset-name" className="asset-name">
+
+            <div className="kind-switch" role="group" aria-label="Coin or currency">
+              <button type="button" aria-pressed={source.kind === 'coin'} onClick={() => chooseKind('coin')}>
+                Coin
+              </button>
+              <button
+                type="button"
+                aria-pressed={source.kind === 'fiat'}
+                onClick={() => chooseKind('fiat')}
+              >
+                Currency
+              </button>
+            </div>
+            <p id="convert-hint" className="convert-hint">
+              {source.kind === 'coin'
+                ? 'Pick the coin. The blue sheet shows that amount in currency.'
+                : 'Pick the currency. The blue sheet shows that amount in coins.'}
+            </p>
+            <p className="asset-name">
               {source.name}
               {source.id === 'sats' && <span> · 100,000,000 per bitcoin</span>}
             </p>
-
-            <div className="pick">
-              <Picker label="Coin" assets={COINS} selected={from} onSelect={setFrom} />
-              <Picker label="Currency" assets={FIATS} selected={from} onSelect={setFrom} />
+            <div className="chips" role="group" aria-label={source.kind === 'coin' ? 'Coins' : 'Currencies'} ref={chipsRef}>
+              {(source.kind === 'coin' ? COINS : FIATS).map((asset) => (
+                <button
+                  key={asset.id}
+                  type="button"
+                  className="chip"
+                  aria-pressed={asset.id === from}
+                  onClick={() => setFrom(asset.id)}
+                >
+                  {asset.label}
+                </button>
+              ))}
             </div>
           </section>
 
-          <section className="field" aria-label={board.heading}>
+          <section className="field" aria-label={`In ${intoWords}`}>
             <svg className="waves" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
               {WAVE_PATHS.map((d) => (
                 <path key={d} d={d} />
@@ -251,55 +325,97 @@ export function App() {
             <div className="shade" aria-hidden="true" />
             <div className="field-body">
               <div className="field-head">
-                <h2>{board.heading}</h2>
+                <h2>In {intoWords}</h2>
                 <p translate="no">
                   {amount.trim() || '0'} {source.label}
                 </p>
               </div>
-              <div className="board" data-count={board.primary.length}>
-                {board.primary.map((asset) => (
-                  <QuoteButton
-                    key={asset.id}
-                    asset={asset}
-                    value={board.price(asset)}
-                    hot={hot === asset.id}
-                    onCopy={onQuote}
-                  />
-                ))}
+              <div className="feature">
+                <p className="feature-kicker" translate="no">
+                  {amount.trim() || '0'} {source.label} =
+                </p>
+                <p className={`feature-value ${lengthClass(featuredValue == null ? '—' : formatQuote(featuredValue, featured.id))}`} translate="no">
+                  {featuredValue == null ? '—' : formatQuote(featuredValue, featured.id)}
+                </p>
+                <p className="feature-name">
+                  {featured.label} · {featured.name}
+                </p>
+                <button
+                  type="button"
+                  className="copy-btn"
+                  onClick={() => onQuote(featured, featuredValue)}
+                  disabled={featuredValue == null}
+                >
+                  {hot === featured.id ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+              <div className="board" role="radiogroup" aria-label={`Choose a ${source.kind === 'coin' ? 'currency' : 'coin'}`}>
+                {targets.map((asset) => {
+                  const value = price(asset)
+                  const selected = asset.id === featured.id
+                  return (
+                    <button
+                      key={asset.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      className="quote"
+                      onClick={() => setInto(asset.id)}
+                    >
+                      <span className="quote-meta">
+                        <span className="code" translate="no">
+                          {asset.label}
+                        </span>
+                        <span className="name">{asset.name}</span>
+                      </span>
+                      <span className={`value ${lengthClass(value == null ? '—' : formatQuote(value, asset.id))}`} translate="no">
+                        {value == null ? '—' : formatQuote(value, asset.id)}
+                      </span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
           </section>
         </div>
 
-        <section className="also" aria-label={board.also}>
-          <h2>{board.also}</h2>
-          <div className="minor">
-            {board.secondary.map((asset) => {
-              const value = board.price(asset)
-              return (
-                <button
-                  key={asset.id}
-                  type="button"
-                  className="minor-quote"
-                  data-hot={hot === asset.id ? 'true' : 'false'}
-                  onClick={() => onQuote(asset, value)}
-                  aria-label={
-                    value == null
-                      ? `${asset.name} unavailable`
-                      : `Copy ${formatQuote(value, asset.id)} ${asset.label}`
-                  }
-                >
-                  <span className="code" translate="no">
-                    {asset.label}
-                  </span>
-                  <span className={`value ${lengthClass(value == null ? '—' : formatQuote(value, asset.id))}`} translate="no">
-                    {value == null ? '—' : formatQuote(value, asset.id)}
-                  </span>
-                  <span className="name">{asset.name}</span>
-                </button>
-              )
-            })}
+        <section className="also" aria-label={`Same amount in ${sameWords}`}>
+          <div className="also-head">
+            <h2 id="also-title">Same amount in {sameWords}</h2>
+            <button
+              type="button"
+              className="also-toggle"
+              aria-expanded={alsoOpen}
+              aria-controls="also-list"
+              onClick={() => setAlsoOpen((open) => !open)}
+            >
+              {alsoOpen ? 'Hide' : 'Show'}
+            </button>
           </div>
+          {alsoOpen && (
+            <div className="minor" id="also-list">
+              {sameKind.map((asset) => {
+                const value = price(asset)
+                return (
+                  <button
+                    key={asset.id}
+                    type="button"
+                    className="minor-quote"
+                    onClick={() => setFrom(asset.id)}
+                    aria-label={`Convert ${asset.name} instead`}
+                  >
+                    <span className="code" translate="no">
+                      {asset.label}
+                    </span>
+                    <span className={`value ${lengthClass(value == null ? '—' : formatQuote(value, asset.id))}`} translate="no">
+                      {value == null ? '—' : formatQuote(value, asset.id)}
+                    </span>
+                    <span className="name">{asset.name}</span>
+                  </button>
+                )
+              })}
+            </div>
+          )}
         </section>
 
         <section className="guide" aria-label="About this crypto converter">
@@ -326,14 +442,15 @@ export function App() {
             </p>
           )}
           <p>
-            Open to anyone. No account, no wallet, and no cookies. Opening the link does not sign
-            you in or ask for a permission.
+            Open to anyone. No account and no wallet. Opening the link does not sign you in or ask
+            for a permission.
           </p>
           <p>
             {rates?.source === 'daily backup'
               ? 'CoinGecko didn’t answer, so these are backup prices and can be a day old. HYPE may be missing.'
               : 'Prices come from CoinGecko.'}{' '}
-            The amount stays in this browser and is not part of that request. Nothing here tracks you.
+            The amount stays in this browser and is not part of that request. Vercel Analytics counts
+            the visit and does not receive the amount.
           </p>
         </footer>
       </main>
@@ -351,66 +468,4 @@ function lengthClass(text: string) {
   if (text.length > 18) return 'is-xs'
   if (text.length > 14) return 'is-sm'
   return ''
-}
-
-function Picker({
-  label,
-  assets,
-  selected,
-  onSelect,
-}: {
-  label: string
-  assets: Asset[]
-  selected: string
-  onSelect: (id: string) => void
-}) {
-  return (
-    <div className="pick-row">
-      <span className="pick-label">{label}</span>
-      <div className="chips" role="group" aria-label={label}>
-        {assets.map((asset) => (
-          <button
-            key={asset.id}
-            type="button"
-            className="chip"
-            aria-pressed={asset.id === selected}
-            onClick={() => onSelect(asset.id)}
-          >
-            {asset.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function QuoteButton({
-  asset,
-  value,
-  hot,
-  onCopy,
-}: {
-  asset: Asset
-  value: number | null
-  hot: boolean
-  onCopy: (asset: Asset, value: number | null) => void
-}) {
-  const text = value == null ? '—' : formatQuote(value, asset.id)
-  return (
-    <button
-      type="button"
-      className="quote"
-      data-hot={hot ? 'true' : 'false'}
-      onClick={() => onCopy(asset, value)}
-      aria-label={value == null ? `${asset.name} unavailable` : `Copy ${text} ${asset.label}`}
-    >
-      <span className="code" translate="no">
-        {asset.label}
-      </span>
-      <span className={`value ${lengthClass(text)}`} translate="no">
-        {text}
-      </span>
-      <span className="name">{asset.name}</span>
-    </button>
-  )
 }
