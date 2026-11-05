@@ -1,0 +1,31 @@
+{
+  "name": "rate",
+  "private": false,
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philipgjorup/thecryptoconverter.git"
+  },
+  "homepage": "https://thecryptoconverter.com",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "@fontsource/barlow-condensed": "^5.2.6",
+    "@fontsource/ibm-plex-mono": "^5.2.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.5"
+  }
+}

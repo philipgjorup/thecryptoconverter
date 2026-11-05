@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0000F0" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="description"
+      content="Convert Bitcoin, satoshis, Ethereum, Solana, XRP, and other coins into dollars, euro, yen, yuan, colón, and kroner. No account. Your amount stays in the browser."
+    />
+    <meta property="og:title" content="Crypto Converter — BTC, ETH, SOL to USD, EUR, JPY" />
+    <meta
+      property="og:description"
+      content="Convert Bitcoin, satoshis, Ethereum, Solana, XRP, and other coins into dollars, euro, yen, yuan, colón, and kroner. No account. Your amount stays in the browser."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thecryptoconverter.com/" />
+    <link rel="canonical" href="https://thecryptoconverter.com/" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Rate" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>Crypto Converter — BTC, ETH, SOL to USD, EUR, JPY</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Crypto Converter",
+            "url": "https://thecryptoconverter.com/",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Any",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "description": "Convert Bitcoin, satoshis, Ethereum, Solana, XRP, and other coins into dollars, euro, yen, yuan, colón, and kroner. No account. Your amount stays in the browser."
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What does this crypto converter do?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "It converts Bitcoin, satoshis, Ethereum, Solana, XRP, BNB, and other coins into US dollars, euro, yen, yuan, Costa Rican colón, and Danish krone. Type an amount, pick a coin or a currency, and the rest of the sheet updates at once."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How many satoshis are in one bitcoin?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "One bitcoin is 100,000,000 satoshis. Choose BTC or SATS and the sheet converts between them along with the other coins and currencies."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which cryptocurrencies can I convert?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, and NEAR."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which currencies does the converter include?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "US dollars, euro, yen, yuan, Costa Rican colón (CRC), and Danish krone (DKK)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does the amount I type get uploaded?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. The amount stays in this browser. The page asks CoinGecko for public prices only, and that request does not include what you typed. There is no account, no wallet connection, no cookie, and no tracker."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Where do the crypto prices come from?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "CoinGecko, refreshed about once a minute. If CoinGecko does not answer, the sheet uses a daily public backup feed instead. Hyperliquid can be missing on that backup."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <style>
+      html,
+      body {
+        background: #e8e6d8;
+      }
+      #about {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="about">
+      <h1>Crypto converter</h1>
+      <p>
+        Convert Bitcoin, satoshis, Ethereum, Solana, XRP, and other coins into dollars, euro, yen,
+        yuan, colón, and kroner. No account. Your amount stays in the browser.
+      </p>
+      <h2>What does this crypto converter do?</h2>
+      <p>
+        It converts Bitcoin, satoshis, Ethereum, Solana, XRP, BNB, and other coins into US dollars,
+        euro, yen, yuan, Costa Rican colón, and Danish krone. Type an amount, pick a coin or a
+        currency, and the rest of the sheet updates at once.
+      </p>
+      <h2>How many satoshis are in one bitcoin?</h2>
+      <p>
+        One bitcoin is 100,000,000 satoshis. Choose BTC or SATS and the sheet converts between them
+        along with the other coins and currencies.
+      </p>
+      <h2>Which cryptocurrencies can I convert?</h2>
+      <p>
+        Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash,
+        Monero, Hyperliquid, and NEAR.
+      </p>
+      <h2>Which currencies does the converter include?</h2>
+      <p>US dollars, euro, yen, yuan, Costa Rican colón (CRC), and Danish krone (DKK).</p>
+      <h2>Does the amount I type get uploaded?</h2>
+      <p>
+        No. The amount stays in this browser. The page asks CoinGecko for public prices only, and
+        that request does not include what you typed. There is no account, no wallet connection, no
+        cookie, and no tracker.
+      </p>
+      <h2>Where do the crypto prices come from?</h2>
+      <p>
+        CoinGecko, refreshed about once a minute. If CoinGecko does not answer, the sheet uses a
+        daily public backup feed instead. Hyperliquid can be missing on that backup.
+      </p>
+    </main>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
