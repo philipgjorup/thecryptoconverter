@@ -694,7 +694,7 @@ footer a {
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    animation: run-up 140s linear infinite;
+    animation: run-up 64s linear infinite;
   }
 
   .mark-run a {
