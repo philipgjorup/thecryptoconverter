@@ -601,6 +601,10 @@ footer p + p {
   margin-top: 6px;
 }
 
+footer a {
+  color: var(--blue);
+}
+
 .toast {
   position: fixed;
   left: 50%;

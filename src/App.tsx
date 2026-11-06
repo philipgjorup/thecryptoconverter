@@ -456,6 +456,12 @@ export function App() {
             The amount stays in this browser and is not part of that request. Vercel Analytics counts
             the visit and does not receive the amount.
           </p>
+          <p>
+            Built by{' '}
+            <a href="https://x.com/0zkphilip" target="_blank" rel="noopener noreferrer">
+              @0zkphilip
+            </a>
+          </p>
         </footer>
       </main>
 
