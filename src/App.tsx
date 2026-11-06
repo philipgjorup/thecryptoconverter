@@ -28,6 +28,17 @@ const WAVE_PATHS = Array.from({ length: 16 }, (_, i) => {
   return d
 })
 
+function readNight() {
+  try {
+    const stored = localStorage.getItem('rate:theme')
+    if (stored === 'night') return true
+    if (stored === 'day') return false
+  } catch {
+    /* ignore */
+  }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+}
+
 function readAmount() {
   try {
     const stored = localStorage.getItem('rate:amount')
@@ -172,9 +183,15 @@ export function App() {
   const [notice, setNotice] = useState<string | null>(null)
   const [hot, setHot] = useState<string | null>(null)
   const [pickerOpen, setPickerOpen] = useState(false)
+  const [night, setNight] = useState(readNight)
   const inputRef = useRef<HTMLInputElement>(null)
   const pickerRef = useRef<HTMLDivElement>(null)
   const noticeTimer = useRef(0)
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = night ? 'night' : 'day'
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', night ? '#090a07' : '#0000F0')
+  }, [night])
 
   useEffect(() => {
     try {
@@ -335,6 +352,22 @@ export function App() {
             <button type="button" onClick={() => window.dispatchEvent(new Event('rate:refresh'))}>
               Refresh
             </button>
+            <button
+              type="button"
+              className="theme-toggle"
+              aria-pressed={night}
+              onClick={() => {
+                const next = !night
+                setNight(next)
+                try {
+                  localStorage.setItem('rate:theme', next ? 'night' : 'day')
+                } catch {
+                  /* the switch still works for this visit */
+                }
+              }}
+            >
+              {night ? 'Day' : 'Night'}
+            </button>
           </div>
         </header>
         {rates?.source === 'daily backup' && (
@@ -379,8 +412,8 @@ export function App() {
             </div>
             <p id="convert-hint" className="convert-hint">
               {source.kind === 'coin'
-                ? 'The blue sheet shows that amount in currency.'
-                : 'The blue sheet shows that amount in coins.'}
+                ? 'The sheet shows that amount in currency.'
+                : 'The sheet shows that amount in coins.'}
             </p>
             <div className={pickerOpen ? 'picker is-open' : 'picker'} ref={pickerRef}>
               <button

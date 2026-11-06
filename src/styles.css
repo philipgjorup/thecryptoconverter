@@ -2,10 +2,72 @@
   --paper: #e8e6d8;
   --blue: #0000f0;
   --ink: #0c0c0c;
+  --bar: #0000f0;
   --line: rgba(12, 12, 12, 0.16);
   --paper-ink: rgba(232, 230, 216, 0.72);
+  --muted: rgba(12, 12, 12, 0.62);
+  --soft: rgba(12, 12, 12, 0.72);
+  --sheet-line: rgba(232, 230, 216, 0.28);
+  --sheet-shade: rgba(232, 230, 216, 0.14);
+  --sheet-hover: rgba(232, 230, 216, 0.12);
+  --sheet-wave: rgba(232, 230, 216, 0.16);
+  --sheet: var(--blue);
+  --on-sheet: var(--paper);
   color-scheme: light;
   font-synthesis: none;
+}
+
+html[data-theme="night"] {
+  --paper: #090a07;
+  --blue: #c8ce22;
+  --ink: #e4dfc6;
+  --bar: #090a07;
+  --line: rgba(228, 223, 198, 0.16);
+  --paper-ink: rgba(228, 223, 198, 0.62);
+  --muted: rgba(228, 223, 198, 0.62);
+  --soft: rgba(228, 223, 198, 0.74);
+  --sheet-line: rgba(228, 223, 198, 0.22);
+  --sheet-shade: rgba(200, 206, 34, 0.14);
+  --sheet-hover: rgba(200, 206, 34, 0.1);
+  --sheet-wave: rgba(200, 206, 34, 0.24);
+  --sheet: #10120c;
+  --on-sheet: var(--ink);
+  color-scheme: dark;
+}
+
+html[data-theme="night"] body::before {
+  opacity: 0.14;
+  mix-blend-mode: soft-light;
+}
+
+html[data-theme="night"] .field {
+  box-shadow: 7px 7px 0 var(--blue);
+}
+
+html[data-theme="night"] .quote[aria-checked='true'],
+html[data-theme="night"] .quote[aria-checked='true']:hover {
+  background: var(--blue);
+  color: #090a07;
+}
+
+html[data-theme="night"] .quote[aria-checked='true'] .code,
+html[data-theme="night"] .quote[aria-checked='true'] .name {
+  color: #090a07;
+}
+
+html[data-theme="night"] .quote[aria-checked='true'] .name {
+  opacity: 0.62;
+}
+
+html[data-theme="night"] .copy-btn {
+  background: var(--blue);
+  color: #090a07;
+}
+
+html[data-theme="night"] .backup-note,
+html[data-theme="night"] .toast {
+  background: #10120c;
+  color: var(--ink);
 }
 
 * {
@@ -18,7 +80,7 @@ body {
   min-height: 100%;
   overflow-x: clip;
   background:
-    linear-gradient(#0000f0, #0000f0) top / 100% env(safe-area-inset-top) no-repeat,
+    linear-gradient(var(--bar), var(--bar)) top / 100% env(safe-area-inset-top) no-repeat,
     var(--paper);
   color: var(--ink);
 }
@@ -112,7 +174,7 @@ button {
 
 .status .source-name {
   margin-top: 4px;
-  color: rgba(12, 12, 12, 0.62);
+  color: var(--muted);
 }
 
 .mark {
@@ -151,7 +213,9 @@ button {
 }
 
 .status button {
+  display: block;
   margin-top: 8px;
+  margin-left: auto;
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -338,8 +402,8 @@ button {
 
 .field {
   position: relative;
-  color: var(--paper);
-  background: var(--blue);
+  color: var(--on-sheet);
+  background: var(--sheet);
   box-shadow: 7px 7px 0 var(--ink);
   overflow: hidden;
   min-width: 0;
@@ -355,7 +419,7 @@ button {
 
 .waves path {
   fill: none;
-  stroke: rgba(232, 230, 216, 0.16);
+  stroke: var(--sheet-wave);
   stroke-width: 1.4;
 }
 
@@ -369,7 +433,7 @@ button {
   background: repeating-linear-gradient(
     to bottom,
     transparent 0 3px,
-    rgba(232, 230, 216, 0.14) 3px 4px
+    var(--sheet-shade) 3px 4px
   );
 }
 
@@ -410,7 +474,7 @@ button {
 .feature {
   padding: 4px 4px 18px;
   margin-bottom: 4px;
-  border-bottom: 1px solid rgba(232, 230, 216, 0.35);
+  border-bottom: 1px solid var(--sheet-line);
 }
 
 .feature-kicker,
@@ -475,8 +539,8 @@ button {
   min-height: 58px;
   padding: 12px 8px;
   text-align: left;
-  color: var(--paper);
-  box-shadow: inset 0 -1px 0 rgba(232, 230, 216, 0.28);
+  color: var(--on-sheet);
+  box-shadow: inset 0 -1px 0 var(--sheet-line);
 }
 
 .quote-meta {
@@ -523,7 +587,7 @@ button {
 }
 
 .quote:hover {
-  background: rgba(232, 230, 216, 0.12);
+  background: var(--sheet-hover);
 }
 
 .quote[aria-checked='true'] {
@@ -536,7 +600,7 @@ button {
 }
 
 .quote[aria-checked='true'] .name {
-  color: rgba(12, 12, 12, 0.62);
+  color: var(--muted);
 }
 
 .quote[aria-checked='true']:hover {
@@ -643,7 +707,7 @@ button {
 }
 
 .minor-quote .name {
-  color: rgba(12, 12, 12, 0.62);
+  color: var(--muted);
 }
 
 footer {
@@ -657,7 +721,7 @@ footer p {
   max-width: 62ch;
   font-size: 12px;
   line-height: 1.55;
-  color: rgba(12, 12, 12, 0.72);
+  color: var(--soft);
 }
 
 footer p + p {
