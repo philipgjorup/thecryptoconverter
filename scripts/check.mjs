@@ -13,7 +13,7 @@ await esbuild.build({
   outfile,
 })
 
-const { parseAmount, convert, formatQuote } = await import(pathToFileURL(outfile).href)
+const { parseAmount, convert, formatQuote, sanitizeRates } = await import(pathToFileURL(outfile).href)
 
 const rates = {
   fetchedAt: 0,
@@ -60,6 +60,23 @@ close(convert(100, 'eur', 'btc', rates), 100 / 67726, 'eur btc')
 close(convert(1, 'eth', 'btc', rates), 2247.07 / 76028, 'eth btc')
 assert(convert(1, 'hype', 'usd', rates) === null, 'missing coin')
 assert(formatQuote(100_000_000.4, 'sats') === '100,000,000' || formatQuote(100_000_000.4, 'sats').replace(/\D/g, '') === '100000000', 'sats format')
+
+const fresh = sanitizeRates({
+  fetchedAt: Date.now(),
+  source: 'CoinGecko',
+  coins: { btc: { usd: 76028, eur: 67726 }, planted: { usd: 1 } },
+})
+assert(fresh?.coins.btc.usd === 76028 && fresh.coins.planted == null, 'drops an unknown coin')
+assert(sanitizeRates({ fetchedAt: Date.now(), source: 'CoinGecko', coins: { btc: { usd: 1 } } }) === null, 'rejects a nonsense bitcoin price')
+assert(sanitizeRates({ fetchedAt: Date.now() + 1e10, source: 'CoinGecko', coins: { btc: { usd: 76028 } } }) === null, 'rejects a future stamp')
+assert(sanitizeRates({ fetchedAt: Date.now(), source: 'nope', coins: { btc: { usd: 76028 } } }) === null, 'rejects an unknown source')
+
+const policyFiles = ['vercel.json', 'vite.config.ts'].map((file) => fs.readFileSync(file, 'utf8'))
+for (const bit of ["script-src 'self'", "script-src-attr 'none'", "frame-ancestors 'none'", "object-src 'none'", "form-action 'none'"]) {
+  assert(policyFiles.every((text) => text.includes(bit)), `policy missing ${bit}`)
+}
+assert(fs.existsSync('public/.well-known/security.txt'), 'security.txt')
+assert(fs.readFileSync('vercel.json', 'utf8').includes('sandbox'), 'logo files are sandboxed')
 
 const seoOut = path.join(os.tmpdir(), `rate-seo-${process.pid}.mjs`)
 await esbuild.build({

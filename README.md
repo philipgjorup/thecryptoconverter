@@ -19,6 +19,12 @@ Two things do leave the browser:
 - A public price list from CoinGecko. If CoinGecko does not answer, the page uses a daily public backup feed.
 - A visit count from Vercel Analytics. That count does not include the amount.
 
+## Harder to tamper with
+
+The live site will not load inside another page. Only this site’s own scripts can run, and a logo file is served so opening it cannot run code. A saved price list is shown only when it is a normal quote. A Bitcoin figure outside a very wide range is dropped, and the page asks for prices again. Nothing here is a wallet, and the amount you type is not part of the price request.
+
+To report a problem: [security.txt](https://thecryptoconverter.com/.well-known/security.txt).
+
 ## Prices
 
 This uses CoinGecko’s public `simple/price` API with no API key. The page asks again about once a minute while it is open, and it skips a repeat if the last good answer was under 15 seconds ago.

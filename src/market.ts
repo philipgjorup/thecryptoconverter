@@ -185,8 +185,42 @@ export function formatAge(at: number, now: number): string {
   return `${Math.round(h / 24)}d ago`
 }
 
+const BTC_USD_MIN = 1_000
+const BTC_USD_MAX = 100_000_000
+const PRICE_MAX = 1e12
+
 function positive(value: unknown): number | null {
-  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= PRICE_MAX ? value : null
+}
+
+/** Keep a price list only when it is a normal quote. Anything else is ignored. */
+export function sanitizeRates(data: unknown): Rates | null {
+  if (!data || typeof data !== 'object') return null
+  const row = data as Record<string, unknown>
+  if (row.source !== 'CoinGecko' && row.source !== 'daily backup') return null
+  if (typeof row.fetchedAt !== 'number' || !Number.isFinite(row.fetchedAt)) return null
+  if (row.fetchedAt > Date.now() + 120_000) return null
+  if (!row.coins || typeof row.coins !== 'object') return null
+  const incoming = row.coins as Record<string, unknown>
+  const coins: Rates['coins'] = {}
+  for (const id of [...Object.keys(COINGECKO_IDS), 'sats']) {
+    const quote = quoteFrom(incoming[id])
+    if (quote) coins[id] = quote
+  }
+  const btc = coins.btc?.usd
+  if (btc == null || btc < BTC_USD_MIN || btc > BTC_USD_MAX) return null
+  return { fetchedAt: row.fetchedAt, source: row.source, coins }
+}
+
+function quoteFrom(value: unknown): Quote | null {
+  if (!value || typeof value !== 'object') return null
+  const row = value as Record<string, unknown>
+  const quote: Quote = {}
+  for (const fiat of FIAT_IDS) {
+    const price = positive(row[fiat])
+    if (price != null) quote[fiat] = price
+  }
+  return quote.usd == null ? null : quote
 }
 
 function withSats(coins: Rates['coins']): Rates['coins'] {
@@ -215,8 +249,9 @@ function fromCoinGecko(data: unknown): Rates {
     if (quote.usd != null) coins[id] = quote
   }
   const next = withSats(coins)
-  if (next.btc?.usd == null) throw new Error('missing bitcoin')
-  return { fetchedAt: Date.now(), source: 'CoinGecko', coins: next }
+  const clean = sanitizeRates({ fetchedAt: Date.now(), source: 'CoinGecko', coins: next })
+  if (!clean) throw new Error('rejected')
+  return clean
 }
 
 function fromBackup(data: unknown): Rates {
@@ -244,8 +279,9 @@ function fromBackup(data: unknown): Rates {
     if (quote.usd != null) coins[id] = quote
   }
   const next = withSats(coins)
-  if (next.btc?.usd == null) throw new Error('missing bitcoin')
-  return { fetchedAt: Date.now(), source: 'daily backup', coins: next }
+  const clean = sanitizeRates({ fetchedAt: Date.now(), source: 'daily backup', coins: next })
+  if (!clean) throw new Error('rejected')
+  return clean
 }
 
 async function fetchJson(url: string, parent: AbortSignal, ms = 8000): Promise<unknown> {
@@ -258,8 +294,14 @@ async function fetchJson(url: string, parent: AbortSignal, ms = 8000): Promise<u
     const res = await fetch(url, {
       signal: controller.signal,
       headers: { accept: 'application/json' },
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer',
+      cache: 'no-store',
+      redirect: 'follow',
     })
     if (!res.ok) throw new Error(String(res.status))
+    const type = res.headers.get('content-type') ?? ''
+    if (!type.toLowerCase().includes('application/json')) throw new Error('type')
     return await res.json()
   } finally {
     clearTimeout(timer)
@@ -284,9 +326,7 @@ export function readCache(): Rates | null {
   try {
     const raw = localStorage.getItem(CACHE_KEY)
     if (!raw) return null
-    const data = JSON.parse(raw) as Rates
-    if (typeof data?.fetchedAt !== 'number' || data.coins?.btc?.usd == null) return null
-    return data
+    return sanitizeRates(JSON.parse(raw))
   } catch {
     return null
   }
