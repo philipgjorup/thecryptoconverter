@@ -816,6 +816,16 @@ footer a {
     object-fit: contain;
   }
 
+  html[data-theme="night"] .mark-run a.is-night-plate {
+    background: #e4dfc6;
+    border-radius: 50%;
+  }
+
+  html[data-theme="night"] .mark-run a.is-night-plate img {
+    width: 20px;
+    height: 20px;
+  }
+
   .sheet {
     width: min(1180px, calc(100% - 140px));
   }

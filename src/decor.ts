@@ -25,3 +25,6 @@ export const SPINE_LINE = [
 
 /** The top 20 logos, in market-cap order. Satoshis are not listed, so Bitcoin appears once. */
 export const SPINE_MARKS = TOP_MARKS.slice(0, 20)
+
+/** Near-black or navy marks. Night mode puts these on a cream disc so the shape stays visible. */
+export const NIGHT_PLATE = new Set(['eth', 'xrp', 'wbt', 'ada', 'xlm'])

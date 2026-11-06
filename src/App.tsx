@@ -14,7 +14,7 @@ import {
   readCache,
   writeCache,
 } from './market'
-import { SPINE_LINE, SPINE_MARKS } from './decor'
+import { NIGHT_PLATE, SPINE_LINE, SPINE_MARKS } from './decor'
 import { FAQ, PAGE_DESCRIPTION, SPONSOR } from './seo'
 
 function readNight() {
@@ -106,6 +106,7 @@ const Spine = memo(function Spine() {
                     href={`https://www.coingecko.com/en/coins/${mark.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={NIGHT_PLATE.has(mark.id) ? 'is-night-plate' : undefined}
                     tabIndex={copy === 0 && loop === 0 ? undefined : -1}
                     aria-label={`${mark.name} on CoinGecko`}
                   >
