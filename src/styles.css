@@ -643,6 +643,9 @@ footer p + p {
   .spine-r {
     right: 10px;
     width: 28px;
+    display: flex;
+    align-items: center;
+    pointer-events: auto;
   }
 
   .spine-run {
@@ -655,18 +658,24 @@ footer p + p {
     animation: run-down 110s linear infinite;
   }
 
-  .mark-run {
-    display: flex;
-    flex-direction: column;
-    animation: run-marks 42s linear infinite;
-  }
-
   .mark-set {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    padding-bottom: 14px;
+    max-height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .mark-set a {
+    display: block;
+    line-height: 0;
+  }
+
+  .mark-set a:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
   }
 
   .mark-set img {
@@ -755,18 +764,12 @@ footer p + p {
   to { transform: translate3d(0, 0, 0); }
 }
 
-@keyframes run-marks {
-  from { transform: translate3d(0, -25%, 0); }
-  to { transform: translate3d(0, 0, 0); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .toast {
     transition: none;
   }
 
-  .spine-run,
-  .mark-run {
+  .spine-run {
     animation: none;
   }
 }

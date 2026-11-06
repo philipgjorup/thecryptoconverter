@@ -1,3 +1,5 @@
+import { COINS } from './market'
+
 /** CoinGecko top 100 by market cap, 5 Nov 2026. Decorative only. */
 export const TOP_100 = [
   'BTC', 'ETH', 'USDT', 'BNB', 'XRP', 'USDC', 'SOL', 'TRX', 'FIGR', 'ZEC',
@@ -12,21 +14,16 @@ export const TOP_100 = [
   'USTB', 'CAKE', 'XDC', 'PEARL', 'JAAA', 'DASH', 'BDX', 'USD0', 'ETHFI', 'EURC',
 ] as const
 
-export const TOP_100_LINE = TOP_100.join(' · ')
+const ranked = new Set<string>(TOP_100)
 
-export const COIN_MARKS = [
-  { id: 'btc', src: '/marks/btc.svg' },
-  { id: 'sats', src: '/marks/sats.svg' },
-  { id: 'eth', src: '/marks/eth.svg' },
-  { id: 'usdt', src: '/marks/usdt.svg' },
-  { id: 'bnb', src: '/marks/bnb.svg' },
-  { id: 'xrp', src: '/marks/xrp.svg' },
-  { id: 'usdc', src: '/marks/usdc.svg' },
-  { id: 'sol', src: '/marks/sol.svg' },
-  { id: 'trx', src: '/marks/trx.svg' },
-  { id: 'doge', src: '/marks/doge.svg' },
-  { id: 'zec', src: '/marks/zec.svg' },
-  { id: 'xmr', src: '/marks/xmr.svg' },
-  { id: 'hype', src: '/marks/hype.svg' },
-  { id: 'near', src: '/marks/near.svg' },
-] as const
+/** Converter tickers that are not already in the top 100, then the top 100. */
+export const SPINE_LINE = [
+  ...COINS.map((coin) => coin.label).filter((label) => !ranked.has(label)),
+  ...TOP_100,
+].join(' · ')
+
+export const COIN_MARKS = COINS.flatMap((coin) => {
+  const slug = coin.page ?? coin.gecko
+  if (!coin.mark || !slug) return []
+  return [{ id: coin.id, name: coin.name, src: coin.mark, slug }]
+})

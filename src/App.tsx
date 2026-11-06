@@ -14,7 +14,7 @@ import {
   readCache,
   writeCache,
 } from './market'
-import { COIN_MARKS, TOP_100_LINE } from './decor'
+import { COIN_MARKS, SPINE_LINE } from './decor'
 import { FAQ, PAGE_DESCRIPTION, SPONSOR } from './seo'
 
 const WAVE_PATHS = Array.from({ length: 16 }, (_, i) => {
@@ -224,19 +224,23 @@ export function App() {
     <div className="page">
       <div className="spine spine-l" aria-hidden="true">
         <p className="spine-run">
-          {TOP_100_LINE}
+          {SPINE_LINE}
           {' · '}
-          {TOP_100_LINE}
+          {SPINE_LINE}
         </p>
       </div>
-      <div className="spine spine-r" aria-hidden="true">
-        <div className="mark-run">
-          {[0, 1, 2, 3].map((copy) => (
-            <div className="mark-set" key={copy}>
-              {COIN_MARKS.map((mark) => (
-                <img key={`${copy}-${mark.id}`} src={mark.src} alt="" width="22" height="22" />
-              ))}
-            </div>
+      <div className="spine spine-r">
+        <div className="mark-set">
+          {COIN_MARKS.map((mark) => (
+            <a
+              key={mark.id}
+              href={`https://www.coingecko.com/en/coins/${mark.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${mark.name} on CoinGecko`}
+            >
+              <img src={mark.src} alt="" width="22" height="22" />
+            </a>
           ))}
         </div>
       </div>

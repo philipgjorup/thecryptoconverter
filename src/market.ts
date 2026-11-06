@@ -5,23 +5,31 @@ export type Asset = {
   label: string
   name: string
   kind: Kind
+  /** CoinGecko price id. Omit when the price is derived, as with satoshis. */
+  gecko?: string
+  /** CoinGecko page slug when it differs from the price id. */
+  page?: string
+  /** Logo shown on the right. A new coin with a mark appears there automatically. */
+  mark?: string
 }
 
+/** Add a coin here. `gecko` is its CoinGecko id and `mark` is its logo. The logo shows on the right, and the ticker joins the left column when it is not already in the top 100. */
 export const COINS: Asset[] = [
-  { id: 'btc', label: 'BTC', name: 'Bitcoin', kind: 'coin' },
-  { id: 'sats', label: 'SATS', name: 'Satoshis', kind: 'coin' },
-  { id: 'eth', label: 'ETH', name: 'Ethereum', kind: 'coin' },
-  { id: 'usdt', label: 'USDT', name: 'Tether', kind: 'coin' },
-  { id: 'bnb', label: 'BNB', name: 'BNB', kind: 'coin' },
-  { id: 'xrp', label: 'XRP', name: 'XRP', kind: 'coin' },
-  { id: 'usdc', label: 'USDC', name: 'USD Coin', kind: 'coin' },
-  { id: 'sol', label: 'SOL', name: 'Solana', kind: 'coin' },
-  { id: 'trx', label: 'TRX', name: 'TRON', kind: 'coin' },
-  { id: 'doge', label: 'DOGE', name: 'Dogecoin', kind: 'coin' },
-  { id: 'zec', label: 'ZEC', name: 'Zcash', kind: 'coin' },
-  { id: 'xmr', label: 'XMR', name: 'Monero', kind: 'coin' },
-  { id: 'hype', label: 'HYPE', name: 'Hyperliquid', kind: 'coin' },
-  { id: 'near', label: 'NEAR', name: 'NEAR', kind: 'coin' },
+  { id: 'btc', label: 'BTC', name: 'Bitcoin', kind: 'coin', gecko: 'bitcoin', mark: '/marks/btc.svg' },
+  { id: 'sats', label: 'SATS', name: 'Satoshis', kind: 'coin', page: 'bitcoin', mark: '/marks/sats.svg' },
+  { id: 'eth', label: 'ETH', name: 'Ethereum', kind: 'coin', gecko: 'ethereum', mark: '/marks/eth.svg' },
+  { id: 'usdt', label: 'USDT', name: 'Tether', kind: 'coin', gecko: 'tether', mark: '/marks/usdt.svg' },
+  { id: 'bnb', label: 'BNB', name: 'BNB', kind: 'coin', gecko: 'binancecoin', mark: '/marks/bnb.svg' },
+  { id: 'xrp', label: 'XRP', name: 'XRP', kind: 'coin', gecko: 'ripple', mark: '/marks/xrp.svg' },
+  { id: 'usdc', label: 'USDC', name: 'USD Coin', kind: 'coin', gecko: 'usd-coin', mark: '/marks/usdc.svg' },
+  { id: 'sol', label: 'SOL', name: 'Solana', kind: 'coin', gecko: 'solana', mark: '/marks/sol.svg' },
+  { id: 'trx', label: 'TRX', name: 'TRON', kind: 'coin', gecko: 'tron', mark: '/marks/trx.svg' },
+  { id: 'doge', label: 'DOGE', name: 'Dogecoin', kind: 'coin', gecko: 'dogecoin', mark: '/marks/doge.svg' },
+  { id: 'zec', label: 'ZEC', name: 'Zcash', kind: 'coin', gecko: 'zcash', mark: '/marks/zec.svg' },
+  { id: 'xmr', label: 'XMR', name: 'Monero', kind: 'coin', gecko: 'monero', mark: '/marks/xmr.svg' },
+  { id: 'hype', label: 'HYPE', name: 'Hyperliquid', kind: 'coin', gecko: 'hyperliquid', mark: '/marks/hype.svg' },
+  { id: 'near', label: 'NEAR', name: 'NEAR', kind: 'coin', gecko: 'near', mark: '/marks/near.svg' },
+  { id: 'zano', label: 'ZANO', name: 'Zano', kind: 'coin', gecko: 'zano', mark: '/marks/zano.svg' },
 ]
 
 export const FIATS: Asset[] = [
@@ -41,21 +49,9 @@ export const ASSET_MAP: Record<string, Asset> = Object.fromEntries(
 
 const FIAT_IDS = ['usd', 'eur', 'jpy', 'cny', 'crc', 'dkk'] as const
 
-const COINGECKO_IDS: Record<string, string> = {
-  btc: 'bitcoin',
-  usdt: 'tether',
-  usdc: 'usd-coin',
-  zec: 'zcash',
-  xmr: 'monero',
-  eth: 'ethereum',
-  hype: 'hyperliquid',
-  near: 'near',
-  bnb: 'binancecoin',
-  xrp: 'ripple',
-  sol: 'solana',
-  trx: 'tron',
-  doge: 'dogecoin',
-}
+const COINGECKO_IDS: Record<string, string> = Object.fromEntries(
+  COINS.flatMap((coin) => (coin.gecko ? [[coin.id, coin.gecko]] : [])),
+)
 
 const SATS_PER_BTC = 100_000_000
 
