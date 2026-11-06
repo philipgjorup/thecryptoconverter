@@ -88,6 +88,28 @@ html[data-theme="night"] body {
   background-image: none;
 }
 
+body::after {
+  content: "";
+  position: fixed;
+  z-index: 7;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background: var(--paper);
+  pointer-events: none;
+}
+
+@media (max-width: 979px) {
+  .page {
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 48px);
+  }
+
+  body::after {
+    height: max(env(safe-area-inset-bottom, 0px), 48px);
+  }
+}
+
 body {
   font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   text-rendering: optimizeLegibility;
