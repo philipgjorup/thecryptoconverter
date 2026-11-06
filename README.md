@@ -6,7 +6,7 @@ The live page is [thecryptoconverter.com](https://thecryptoconverter.com). The s
 
 ## Coins
 
-Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Zano, and Railgun.
+Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Chainlink, Cardano, Bitcoin Cash, Stellar, Uniswap, Litecoin, Avalanche, Bittensor, Zano, and Railgun.
 
 Satoshis are bitcoin divided by 100,000,000. There is no separate satoshi market.
 

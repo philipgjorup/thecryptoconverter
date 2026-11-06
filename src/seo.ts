@@ -17,7 +17,7 @@ export const FAQ = [
   {
     question: 'Which cryptocurrencies can I convert?',
     answer:
-      'Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Zano, and Railgun.',
+      'Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Chainlink, Cardano, Bitcoin Cash, Stellar, Uniswap, Litecoin, Avalanche, Bittensor, Zano, and Railgun.',
   },
   {
     question: 'Which currencies does the converter include?',
