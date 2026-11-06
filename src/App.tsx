@@ -578,7 +578,7 @@ export function App() {
           )}
           <p>
             {rates?.source === 'daily backup'
-              ? 'CoinGecko didn’t answer, so these are backup prices and can be a day old. HYPE, ZANO, and RAIL may be missing.'
+              ? 'CoinGecko didn’t answer, so these are backup prices and can be a day old. TON and ZANO may be missing.'
               : 'Prices come from CoinGecko.'}{' '}
             The amount stays in this browser and is not part of that request. Vercel Analytics counts
             the visit and does not receive the amount.

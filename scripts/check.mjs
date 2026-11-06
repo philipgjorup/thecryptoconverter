@@ -60,6 +60,7 @@ close(convert(100, 'eur', 'btc', rates), 100 / 67726, 'eur btc')
 close(convert(1, 'eth', 'btc', rates), 2247.07 / 76028, 'eth btc')
 assert(convert(1, 'hype', 'usd', rates) === null, 'missing coin')
 assert(formatQuote(100_000_000.4, 'sats') === '100,000,000' || formatQuote(100_000_000.4, 'sats').replace(/\D/g, '') === '100000000', 'sats format')
+assert(!/^0\.0+$/.test(formatQuote(4.1e-9, 'btc').replace(/[^\d.]/g, '')), 'a peso of bitcoin does not display as zero')
 
 const fresh = sanitizeRates({
   fetchedAt: Date.now(),

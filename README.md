@@ -1,12 +1,12 @@
 # Crypto Converter
 
-An open-source converter for the coins on the sheet, priced in US dollars, euro, yen, yuan, British pounds, Australian dollars, Canadian dollars, Costa Rican colón, and Danish krone.
+An open-source converter for coins you can spend, priced in US dollars, euro, yen, yuan, British pounds, Australian and Canadian dollars, Costa Rican colón, Danish krone, Mexican, Argentine, and Colombian pesos, and the main Asian currencies.
 
 The live page is [thecryptoconverter.com](https://thecryptoconverter.com). The source is MIT licensed.
 
 ## Coins
 
-Listed by market cap: Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Zcash, Hyperliquid, Monero, Dogecoin, Chainlink, Cardano, Bitcoin Cash, Stellar, NEAR, Uniswap, Litecoin, Avalanche, Sui, Toncoin, Bittensor, Polkadot, Railgun, and Zano.
+Listed by market cap: Bitcoin, satoshis, Ethereum, Tether, BNB, USD Coin, Solana, TRON, Monero, Dogecoin, Bitcoin Cash, Litecoin, Toncoin, Dash, and Zano.
 
 Satoshis are bitcoin divided by 100,000,000. There is no separate satoshi market.
 
@@ -29,13 +29,13 @@ To report a problem: [security.txt](https://thecryptoconverter.com/.well-known/s
 
 This uses CoinGecko’s public `simple/price` API with no API key. The page asks again about once a minute while it is open, and it skips a repeat if the last good answer was under 15 seconds ago.
 
-The number is CoinGecko’s aggregated price, not the last trade on one exchange. A small difference against Binance, Kraken, or another book is normal. The sheet shows the source and how long ago it was fetched. **CoinGecko** means the public API answered. **Daily backup** means it did not: a note across the sheet says the figures can be a day old, and Hyperliquid, Zano, and Railgun can be missing.
+The number is CoinGecko’s aggregated price, not the last trade on one exchange. A small difference against Binance, Kraken, or another book is normal. The sheet shows the source and how long ago it was fetched. **CoinGecko** means the public API answered. **Daily backup** means it did not: a note across the sheet says the figures can be a day old, and Toncoin and Zano can be missing. The Colombian peso uses that same daily dollar rate even when CoinGecko answers, because the minute-by-minute list has no peso.
 
 To check a price, open the coin’s logo on a wide screen. It goes to that coin’s CoinGecko page. Satoshis open the Bitcoin page.
 
 ## Add a coin
 
-Add one entry to `COINS` in `src/market.ts`, in market-cap order, with its CoinGecko id in `gecko` and a logo file in `public/marks`. On a wide screen the right column is the top 20 by market cap, each logo the same size and linked to that coin’s CoinGecko page. Satoshis are left out so Bitcoin appears once. A coin outside that 20 is not added to the column. Its ticker joins the left side when it is not already in the top 100.
+Add one entry to `COINS` in `src/market.ts`, in market-cap order, with its CoinGecko id in `gecko` and a logo file in `public/marks`. On a wide screen the right column is those logos, each the same size and linked to that coin’s CoinGecko page. Satoshis are left out so Bitcoin appears once. The left side repeats the same tickers.
 
 ## License
 

@@ -13,34 +13,22 @@ export type Asset = {
   mark?: string
 }
 
-/** Add a coin here, in market-cap order. `gecko` is its CoinGecko id and `mark` is its logo. The right column is only the top 20, so a new coin is not added there. Satoshis share Bitcoin’s logo and stay beside Bitcoin. A coin that is not already in the top 100 has its ticker join the left. */
+/** Add a coin here, in market-cap order. `gecko` is its CoinGecko id and `mark` is its logo. The right column shows these logos, except satoshis, which share Bitcoin’s. The left side is these tickers. */
 export const COINS: Asset[] = [
   { id: 'btc', label: 'BTC', name: 'Bitcoin', kind: 'coin', gecko: 'bitcoin', mark: '/marks/btc.svg' },
   { id: 'sats', label: 'SATS', name: 'Satoshis', kind: 'coin', page: 'bitcoin', mark: '/marks/btc.svg' },
   { id: 'eth', label: 'ETH', name: 'Ethereum', kind: 'coin', gecko: 'ethereum', mark: '/marks/eth.svg' },
   { id: 'usdt', label: 'USDT', name: 'Tether', kind: 'coin', gecko: 'tether', mark: '/marks/usdt.svg' },
   { id: 'bnb', label: 'BNB', name: 'BNB', kind: 'coin', gecko: 'binancecoin', mark: '/marks/bnb.svg' },
-  { id: 'xrp', label: 'XRP', name: 'XRP', kind: 'coin', gecko: 'ripple', mark: '/marks/xrp.svg' },
   { id: 'usdc', label: 'USDC', name: 'USD Coin', kind: 'coin', gecko: 'usd-coin', mark: '/marks/usdc.svg' },
   { id: 'sol', label: 'SOL', name: 'Solana', kind: 'coin', gecko: 'solana', mark: '/marks/sol.svg' },
   { id: 'trx', label: 'TRX', name: 'TRON', kind: 'coin', gecko: 'tron', mark: '/marks/trx.svg' },
-  { id: 'zec', label: 'ZEC', name: 'Zcash', kind: 'coin', gecko: 'zcash', mark: '/marks/zec.svg' },
-  { id: 'hype', label: 'HYPE', name: 'Hyperliquid', kind: 'coin', gecko: 'hyperliquid', mark: '/marks/hype.svg' },
   { id: 'xmr', label: 'XMR', name: 'Monero', kind: 'coin', gecko: 'monero', mark: '/marks/xmr.svg' },
   { id: 'doge', label: 'DOGE', name: 'Dogecoin', kind: 'coin', gecko: 'dogecoin', mark: '/marks/doge.svg' },
-  { id: 'link', label: 'LINK', name: 'Chainlink', kind: 'coin', gecko: 'chainlink', mark: '/marks/top/link.svg' },
-  { id: 'ada', label: 'ADA', name: 'Cardano', kind: 'coin', gecko: 'cardano', mark: '/marks/top/ada.svg' },
   { id: 'bch', label: 'BCH', name: 'Bitcoin Cash', kind: 'coin', gecko: 'bitcoin-cash', mark: '/marks/top/bch.svg' },
-  { id: 'xlm', label: 'XLM', name: 'Stellar', kind: 'coin', gecko: 'stellar', mark: '/marks/top/xlm.svg' },
-  { id: 'near', label: 'NEAR', name: 'NEAR', kind: 'coin', gecko: 'near', mark: '/marks/near.svg' },
-  { id: 'uni', label: 'UNI', name: 'Uniswap', kind: 'coin', gecko: 'uniswap', mark: '/marks/top/uni.svg' },
   { id: 'ltc', label: 'LTC', name: 'Litecoin', kind: 'coin', gecko: 'litecoin', mark: '/marks/top/ltc.svg' },
-  { id: 'avax', label: 'AVAX', name: 'Avalanche', kind: 'coin', gecko: 'avalanche-2', mark: '/marks/top/avax.svg' },
-  { id: 'sui', label: 'SUI', name: 'Sui', kind: 'coin', gecko: 'sui', mark: '/marks/top/sui.svg' },
   { id: 'ton', label: 'TON', name: 'Toncoin', kind: 'coin', gecko: 'the-open-network', mark: '/marks/top/gram.png' },
-  { id: 'tao', label: 'TAO', name: 'Bittensor', kind: 'coin', gecko: 'bittensor', mark: '/marks/top/tao.svg' },
-  { id: 'dot', label: 'DOT', name: 'Polkadot', kind: 'coin', gecko: 'polkadot', mark: '/marks/top/dot.svg' },
-  { id: 'rail', label: 'RAIL', name: 'Railgun', kind: 'coin', gecko: 'railgun', mark: '/marks/rail.jpg' },
+  { id: 'dash', label: 'DASH', name: 'Dash', kind: 'coin', gecko: 'dash', mark: '/marks/top/dash.svg' },
   { id: 'zano', label: 'ZANO', name: 'Zano', kind: 'coin', gecko: 'zano', mark: '/marks/zano.svg' },
 ]
 
@@ -54,6 +42,19 @@ export const FIATS: Asset[] = [
   { id: 'cad', label: 'CAD', name: 'Canadian dollar', kind: 'fiat' },
   { id: 'crc', label: 'CRC', name: 'Colón', kind: 'fiat' },
   { id: 'dkk', label: 'DKK', name: 'Danish krone', kind: 'fiat' },
+  { id: 'mxn', label: 'MXN', name: 'Mexican peso', kind: 'fiat' },
+  { id: 'ars', label: 'ARS', name: 'Argentine peso', kind: 'fiat' },
+  { id: 'cop', label: 'COP', name: 'Colombian peso', kind: 'fiat' },
+  { id: 'krw', label: 'KRW', name: 'Won', kind: 'fiat' },
+  { id: 'inr', label: 'INR', name: 'Rupee', kind: 'fiat' },
+  { id: 'idr', label: 'IDR', name: 'Rupiah', kind: 'fiat' },
+  { id: 'thb', label: 'THB', name: 'Baht', kind: 'fiat' },
+  { id: 'vnd', label: 'VND', name: 'Dong', kind: 'fiat' },
+  { id: 'php', label: 'PHP', name: 'Philippine peso', kind: 'fiat' },
+  { id: 'myr', label: 'MYR', name: 'Ringgit', kind: 'fiat' },
+  { id: 'sgd', label: 'SGD', name: 'Singapore dollar', kind: 'fiat' },
+  { id: 'hkd', label: 'HKD', name: 'Hong Kong dollar', kind: 'fiat' },
+  { id: 'twd', label: 'TWD', name: 'Taiwan dollar', kind: 'fiat' },
 ]
 
 export const ASSETS: Asset[] = [...COINS, ...FIATS]
@@ -62,7 +63,13 @@ export const ASSET_MAP: Record<string, Asset> = Object.fromEntries(
   ASSETS.map((asset) => [asset.id, asset]),
 )
 
-const FIAT_IDS = ['usd', 'eur', 'jpy', 'cny', 'gbp', 'aud', 'cad', 'crc', 'dkk'] as const
+const FIAT_IDS = [
+  'usd', 'eur', 'jpy', 'cny', 'gbp', 'aud', 'cad', 'crc', 'dkk',
+  'mxn', 'ars', 'cop', 'krw', 'inr', 'idr', 'thb', 'vnd', 'php', 'myr', 'sgd', 'hkd', 'twd',
+] as const
+
+/** CoinGecko’s minute-by-minute list has no Colombian peso, so the peso uses the daily dollar rate. */
+const COP = 'cop'
 
 const COINGECKO_IDS: Record<string, string> = Object.fromEntries(
   COINS.flatMap((coin) => (coin.gecko ? [[coin.id, coin.gecko]] : [])),
@@ -79,6 +86,7 @@ export type Rates = {
 }
 
 const CACHE_KEY = 'rate:prices:v1'
+const DAILY_USD = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json'
 
 export function parseAmount(raw: string): number {
   const s = raw.trim().replace(/[\s']/g, '')
@@ -143,7 +151,7 @@ export function formatQuote(n: number, assetId: string): string {
   let min = 2
   let max = 2
   if (asset?.kind === 'fiat') {
-    if (assetId === 'jpy') {
+    if (assetId === 'jpy' || assetId === 'krw' || assetId === 'vnd') {
       if (abs >= 1) {
         min = 0
         max = 0
@@ -164,9 +172,12 @@ export function formatQuote(n: number, assetId: string): string {
   } else if (abs >= 0.0001) {
     min = 2
     max = 6
-  } else {
+  } else if (abs >= 0.00000001) {
     min = 2
     max = 8
+  } else {
+    min = 2
+    max = 12
   }
   return new Intl.NumberFormat(undefined, {
     minimumFractionDigits: min,
@@ -234,7 +245,22 @@ function withSats(coins: Rates['coins']): Rates['coins'] {
   return { ...coins, sats }
 }
 
-function fromCoinGecko(data: unknown): Rates {
+function pesoPerUsd(data: unknown): number | null {
+  if (!data || typeof data !== 'object') return null
+  const usd = (data as { usd?: Record<string, unknown> }).usd
+  return positive(usd?.cop)
+}
+
+function addPeso(coins: Rates['coins'], perUsd: number | null) {
+  if (perUsd == null) return
+  for (const quote of Object.values(coins)) {
+    if (!quote || quote.usd == null || quote[COP] != null) continue
+    const price = positive(quote.usd * perUsd)
+    if (price != null) quote[COP] = price
+  }
+}
+
+function fromCoinGecko(data: unknown, copPerUsd: number | null): Rates {
   if (!data || typeof data !== 'object') throw new Error('empty')
   const table = data as Record<string, Record<string, unknown>>
   const coins: Rates['coins'] = {}
@@ -248,6 +274,7 @@ function fromCoinGecko(data: unknown): Rates {
     }
     if (quote.usd != null) coins[id] = quote
   }
+  addPeso(coins, copPerUsd)
   const next = withSats(coins)
   const clean = sanitizeRates({ fetchedAt: Date.now(), source: 'CoinGecko', coins: next })
   if (!clean) throw new Error('rejected')
@@ -260,7 +287,7 @@ function fromBackup(data: unknown): Rates {
   if (!usd) throw new Error('empty')
   const perUsd: Record<string, number> = {}
   for (const id of [...Object.keys(COINGECKO_IDS), ...FIAT_IDS]) {
-    if (id === 'hype' || id === 'sats') continue
+    if (id === 'sats') continue
     const units = positive(usd[id])
     if (units != null) perUsd[id] = units
   }
@@ -268,7 +295,6 @@ function fromBackup(data: unknown): Rates {
   if (perUsd.btc == null) throw new Error('missing bitcoin')
   const coins: Rates['coins'] = {}
   for (const id of Object.keys(COINGECKO_IDS)) {
-    if (id === 'hype') continue
     const units = perUsd[id]
     if (units == null) continue
     const quote: Quote = {}
@@ -311,14 +337,17 @@ async function fetchJson(url: string, parent: AbortSignal, ms = 8000): Promise<u
 
 export async function fetchRates(parent: AbortSignal): Promise<Rates> {
   const ids = Object.values(COINGECKO_IDS).join(',')
-  const vs = FIAT_IDS.join(',')
+  const vs = FIAT_IDS.filter((id) => id !== COP).join(',')
   const primary = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=${vs}`
   try {
-    return fromCoinGecko(await fetchJson(primary, parent))
+    const [table, fx] = await Promise.all([
+      fetchJson(primary, parent),
+      fetchJson(DAILY_USD, parent).catch(() => null),
+    ])
+    return fromCoinGecko(table, pesoPerUsd(fx))
   } catch (error) {
     if (parent.aborted) throw error
-    const backup = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json'
-    return fromBackup(await fetchJson(backup, parent))
+    return fromBackup(await fetchJson(DAILY_USD, parent))
   }
 }
 
