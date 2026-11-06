@@ -179,21 +179,8 @@ export function App() {
   const noticeTimer = useRef(0)
 
   useEffect(() => {
-    const color = night ? '#090a07' : '#0000F0'
     document.documentElement.dataset.theme = night ? 'night' : 'day'
     document.documentElement.style.colorScheme = night ? 'dark' : 'light'
-    // Phones color the navigation bar from this tag, and they ignore a change
-    // to the existing tag. Replacing the tag is what makes the bar update.
-    const paint = () => {
-      document.querySelectorAll('meta[name="theme-color"]').forEach((node) => node.remove())
-      const meta = document.createElement('meta')
-      meta.setAttribute('name', 'theme-color')
-      meta.setAttribute('content', color)
-      document.head.appendChild(meta)
-    }
-    paint()
-    const frame = requestAnimationFrame(paint)
-    return () => cancelAnimationFrame(frame)
   }, [night])
 
   useEffect(() => {
