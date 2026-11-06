@@ -23,6 +23,7 @@ export const COINS: Asset[] = [
   { id: 'usdc', label: 'USDC', name: 'USD Coin', kind: 'coin', gecko: 'usd-coin', mark: '/marks/usdc.svg' },
   { id: 'sol', label: 'SOL', name: 'Solana', kind: 'coin', gecko: 'solana', mark: '/marks/sol.svg' },
   { id: 'trx', label: 'TRX', name: 'TRON', kind: 'coin', gecko: 'tron', mark: '/marks/trx.svg' },
+  { id: 'zec', label: 'ZEC', name: 'Zcash', kind: 'coin', gecko: 'zcash', mark: '/marks/zec.svg' },
   { id: 'xmr', label: 'XMR', name: 'Monero', kind: 'coin', gecko: 'monero', mark: '/marks/xmr.svg' },
   { id: 'doge', label: 'DOGE', name: 'Dogecoin', kind: 'coin', gecko: 'dogecoin', mark: '/marks/doge.svg' },
   { id: 'bch', label: 'BCH', name: 'Bitcoin Cash', kind: 'coin', gecko: 'bitcoin-cash', mark: '/marks/top/bch.svg' },

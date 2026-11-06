@@ -6,7 +6,7 @@ The live page is [thecryptoconverter.com](https://thecryptoconverter.com). The s
 
 ## Coins
 
-Listed by market cap: Bitcoin, satoshis, Ethereum, Tether, BNB, USD Coin, Solana, TRON, Monero, Dogecoin, Bitcoin Cash, Litecoin, Toncoin, Dash, and Zano.
+Listed by market cap: Bitcoin, satoshis, Ethereum, Tether, BNB, USD Coin, Solana, TRON, Zcash, Monero, Dogecoin, Bitcoin Cash, Litecoin, Toncoin, Dash, and Zano.
 
 Satoshis are bitcoin divided by 100,000,000. There is no separate satoshi market.
 
