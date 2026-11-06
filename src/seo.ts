@@ -26,7 +26,7 @@ export const FAQ = [
   {
     question: 'Where do the crypto prices come from?',
     answer:
-      'CoinGecko, refreshed about once a minute. If CoinGecko does not answer, the sheet uses a daily public backup feed instead. Hyperliquid, Zano, and Railgun can be missing on that backup.',
+      'CoinGecko, refreshed about once a minute. If CoinGecko does not answer, the sheet says daily backup and the figures can be a day old. Hyperliquid, Zano, and Railgun can be missing on that backup.',
   },
 ] as const
 

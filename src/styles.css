@@ -130,6 +130,26 @@ button {
   box-shadow: none;
 }
 
+.mark.is-stale {
+  background: var(--ink);
+  box-shadow: none;
+}
+
+.status.is-backup .source-name {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.backup-note {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 14px;
+  line-height: 1.45;
+  box-shadow: 5px 5px 0 var(--blue);
+}
+
 .status button {
   margin-top: 8px;
   font-size: 12px;

@@ -37,6 +37,9 @@ export const COINS: Asset[] = [
   { id: 'ltc', label: 'LTC', name: 'Litecoin', kind: 'coin', gecko: 'litecoin', mark: '/marks/top/ltc.svg' },
   { id: 'avax', label: 'AVAX', name: 'Avalanche', kind: 'coin', gecko: 'avalanche-2', mark: '/marks/top/avax.svg' },
   { id: 'tao', label: 'TAO', name: 'Bittensor', kind: 'coin', gecko: 'bittensor', mark: '/marks/top/tao.svg' },
+  { id: 'ton', label: 'TON', name: 'Toncoin', kind: 'coin', gecko: 'the-open-network', mark: '/marks/top/gram.png' },
+  { id: 'sui', label: 'SUI', name: 'Sui', kind: 'coin', gecko: 'sui', mark: '/marks/top/sui.svg' },
+  { id: 'dot', label: 'DOT', name: 'Polkadot', kind: 'coin', gecko: 'polkadot', mark: '/marks/top/dot.svg' },
   { id: 'zano', label: 'ZANO', name: 'Zano', kind: 'coin', gecko: 'zano', mark: '/marks/zano.svg' },
   { id: 'rail', label: 'RAIL', name: 'Railgun', kind: 'coin', gecko: 'railgun', mark: '/marks/rail.jpg' },
 ]

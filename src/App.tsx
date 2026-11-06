@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import {
   ASSET_MAP,
   COINS,
@@ -85,6 +85,78 @@ async function copyText(text: string) {
   }
 }
 
+const Spine = memo(function Spine() {
+  return (
+    <>
+      <div className="spine spine-l" aria-hidden="true">
+        <p className="spine-run">
+          {SPINE_LINE}
+          {' · '}
+          {SPINE_LINE}
+        </p>
+      </div>
+      <div className="spine spine-r">
+        <div className="mark-run">
+          {[0, 1].map((copy) =>
+            SPINE_MARKS.map((mark) => (
+              <a
+                key={`${copy}-${mark.id}`}
+                href={`https://www.coingecko.com/en/coins/${mark.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={copy === 0 ? undefined : -1}
+                aria-hidden={copy === 1 ? true : undefined}
+                aria-label={`${mark.name} on CoinGecko`}
+              >
+                <img src={mark.src} alt="" width="28" height="28" />
+              </a>
+            )),
+          )}
+        </div>
+      </div>
+    </>
+  )
+})
+
+function PriceClock({
+  fetchedAt,
+  phase,
+  source,
+}: {
+  fetchedAt: number | null
+  phase: 'loading' | 'ready' | 'error'
+  source: Rates['source'] | null
+}) {
+  const [now, setNow] = useState(() => Date.now())
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(Date.now()), 5000)
+    return () => window.clearInterval(id)
+  }, [])
+
+  const backup = source === 'daily backup'
+  const age = fetchedAt ? formatAge(fetchedAt, now) : null
+  const fresh = phase === 'ready' && fetchedAt != null && !backup && now - fetchedAt < 120_000
+  const status = !fetchedAt
+    ? phase === 'error'
+      ? 'Prices didn’t load'
+      : 'Fetching prices'
+    : backup
+      ? 'Daily backup'
+      : phase === 'error'
+        ? `Offline · saved ${age}`
+        : `Updated ${age}`
+
+  return (
+    <>
+      <p>
+        <i className={fresh ? 'mark is-fresh' : backup ? 'mark is-stale' : 'mark'} aria-hidden="true" />
+        <span>{status}</span>
+      </p>
+      {source && <p className={backup ? 'source-name is-backup' : 'source-name'}>{backup ? 'Prices can be a day old' : source}</p>}
+    </>
+  )
+}
+
 export function App() {
   const [amount, setAmount] = useState(readAmount)
   const [from, setFrom] = useState(readFrom)
@@ -96,7 +168,6 @@ export function App() {
   const [phase, setPhase] = useState<'loading' | 'ready' | 'error'>(readCache() ? 'ready' : 'loading')
   const [notice, setNotice] = useState<string | null>(null)
   const [hot, setHot] = useState<string | null>(null)
-  const [now, setNow] = useState(() => Date.now())
   const inputRef = useRef<HTMLInputElement>(null)
   const chipsRef = useRef<HTMLDivElement>(null)
   const noticeTimer = useRef(0)
@@ -120,11 +191,6 @@ export function App() {
   }, [from])
 
   useEffect(() => {
-    const id = window.setInterval(() => setNow(Date.now()), 5000)
-    return () => window.clearInterval(id)
-  }, [])
-
-  useEffect(() => {
     const controller = new AbortController()
     let generation = 0
     let timer = 0
@@ -141,7 +207,6 @@ export function App() {
         setRates(next)
         setPhase('ready')
         writeCache(next)
-        setNow(Date.now())
       } catch (error) {
         if (stopped || (error instanceof DOMException && error.name === 'AbortError')) return
         if (mine !== generation) return
@@ -210,61 +275,31 @@ export function App() {
     showNotice(ok ? `Copied ${formatted} ${asset.label}` : 'Couldn’t copy')
   }
 
-  const age = rates ? formatAge(rates.fetchedAt, now) : null
-  const fresh = phase === 'ready' && rates != null && now - rates.fetchedAt < 120_000
-  const status = !rates
-    ? phase === 'error'
-      ? 'Prices didn’t load'
-      : 'Fetching prices'
-    : phase === 'error'
-      ? `Offline · saved ${age}`
-      : `Updated ${age}`
-
   return (
     <div className="page">
-      <div className="spine spine-l" aria-hidden="true">
-        <p className="spine-run">
-          {SPINE_LINE}
-          {' · '}
-          {SPINE_LINE}
-        </p>
-      </div>
-      <div className="spine spine-r">
-        <div className="mark-run">
-          {[0, 1].map((copy) =>
-            SPINE_MARKS.map((mark) => (
-              <a
-                key={`${copy}-${mark.id}`}
-                href={`https://www.coingecko.com/en/coins/${mark.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={copy === 0 ? undefined : -1}
-                aria-hidden={copy === 1 ? true : undefined}
-                aria-label={`${mark.name} on CoinGecko`}
-              >
-                <img src={mark.src} alt="" width="28" height="28" />
-              </a>
-            )),
-          )}
-        </div>
-      </div>
+      <Spine />
 
       <main className="sheet">
         <header className="top">
           <h1 className="logo">
             <span>Crypto</span> <span>converter</span>
           </h1>
-          <div className="status">
-            <p>
-              <i className={fresh ? 'mark is-fresh' : 'mark'} aria-hidden="true" />
-              <span>{status}</span>
-            </p>
-            {rates && <p className="source-name">{rates.source}</p>}
+          <div className={rates?.source === 'daily backup' ? 'status is-backup' : 'status'}>
+            <PriceClock
+              fetchedAt={rates?.fetchedAt ?? null}
+              phase={phase}
+              source={rates?.source ?? null}
+            />
             <button type="button" onClick={() => window.dispatchEvent(new Event('rate:refresh'))}>
               Refresh
             </button>
           </div>
         </header>
+        {rates?.source === 'daily backup' && (
+          <p className="backup-note" role="status">
+            CoinGecko didn’t answer. These figures are from the daily backup and can be a day old.
+          </p>
+        )}
 
         <div className="workspace">
           <section className="controls" aria-label="Amount">
