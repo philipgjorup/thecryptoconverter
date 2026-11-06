@@ -461,6 +461,14 @@ export function App() {
             <a href="https://x.com/0zkphilip" target="_blank" rel="noopener noreferrer">
               @0zkphilip
             </a>
+            {'. '}
+            <a
+              href="https://github.com/philipgjorup/thecryptoconverter"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open source on GitHub
+            </a>.
           </p>
         </footer>
       </main>
