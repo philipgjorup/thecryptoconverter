@@ -737,7 +737,7 @@ footer a {
     flex-direction: column;
     align-self: flex-start;
     height: max-content;
-    animation: run-up 48s linear infinite;
+    animation: run-up 28s linear infinite;
   }
 
   .mark-set {

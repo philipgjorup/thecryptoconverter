@@ -16,7 +16,6 @@ export const TOP_100 = [
 ] as const
 
 const ranked = new Set<string>(TOP_100)
-const rankedSlugs = new Set<string>(TOP_MARKS.map((mark) => mark.slug))
 
 /** Converter tickers that are not already in the top 100, then the top 100. */
 export const SPINE_LINE = [
@@ -24,16 +23,5 @@ export const SPINE_LINE = [
   ...TOP_100,
 ].join(' · ')
 
-/**
- * Logos that run along the right side. Converter coins already in the top 100
- * are not repeated, and satoshis are left out so Bitcoin is not shown twice.
- */
-export const SPINE_MARKS = [
-  ...COINS.flatMap((coin) => {
-    if (coin.id === 'sats' || !coin.mark || ranked.has(coin.label)) return []
-    const slug = coin.page ?? coin.gecko
-    if (!slug || rankedSlugs.has(slug)) return []
-    return [{ id: coin.id, name: coin.name, src: coin.mark, slug }]
-  }),
-  ...TOP_MARKS,
-]
+/** The top 20 logos, in market-cap order. Satoshis are not listed, so Bitcoin appears once. */
+export const SPINE_MARKS = TOP_MARKS.slice(0, 20)

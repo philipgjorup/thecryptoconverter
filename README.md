@@ -35,7 +35,7 @@ To check a price, open the coin’s logo on a wide screen. It goes to that coin�
 
 ## Add a coin
 
-Add one entry to `COINS` in `src/market.ts`, in market-cap order, with its CoinGecko id in `gecko` and a logo file in `public/marks`. On a wide screen the right column is the top 100, each logo the same size and linked to that coin’s CoinGecko page. A coin already in that list is not shown again, and satoshis are left out so Bitcoin appears once. Any other new coin is added to the column, and its ticker joins the left side.
+Add one entry to `COINS` in `src/market.ts`, in market-cap order, with its CoinGecko id in `gecko` and a logo file in `public/marks`. On a wide screen the right column is the top 20 by market cap, each logo the same size and linked to that coin’s CoinGecko page. Satoshis are left out so Bitcoin appears once. A coin outside that 20 is not added to the column. Its ticker joins the left side when it is not already in the top 100.
 
 ## License
 
