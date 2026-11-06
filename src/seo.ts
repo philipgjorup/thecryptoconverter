@@ -15,11 +15,6 @@ export const FAQ = [
       'One bitcoin is 100,000,000 satoshis. Choose BTC or SATS and the sheet converts between them along with the other coins and currencies.',
   },
   {
-    question: 'Which cryptocurrencies can I convert?',
-    answer:
-      'Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Chainlink, Cardano, Bitcoin Cash, Stellar, Uniswap, Litecoin, Avalanche, Bittensor, Zano, and Railgun.',
-  },
-  {
     question: 'Which currencies does the converter include?',
     answer: 'US dollars, euro, yen, yuan, British pounds (GBP), Australian dollars (AUD), Canadian dollars (CAD), Costa Rican colón (CRC), and Danish krone (DKK).',
   },

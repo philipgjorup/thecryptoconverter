@@ -450,10 +450,6 @@ export function App() {
             </p>
           )}
           <p>
-            Open to anyone. No account and no wallet. Opening the link does not sign you in or ask
-            for a permission.
-          </p>
-          <p>
             {rates?.source === 'daily backup'
               ? 'CoinGecko didn’t answer, so these are backup prices and can be a day old. HYPE, ZANO, and RAIL may be missing.'
               : 'Prices come from CoinGecko.'}{' '}
