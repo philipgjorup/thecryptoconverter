@@ -735,9 +735,17 @@ footer a {
   .mark-run {
     display: flex;
     flex-direction: column;
+    align-self: flex-start;
+    height: max-content;
+    animation: run-up 48s linear infinite;
+  }
+
+  .mark-set {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 16px;
-    animation: run-up 64s linear infinite;
+    padding-bottom: 16px;
   }
 
   .mark-run a {
@@ -839,7 +847,7 @@ footer a {
     mask-image: none;
   }
 
-  .mark-run a[aria-hidden='true'] {
+  .mark-set[aria-hidden='true'] {
     display: none;
   }
 }

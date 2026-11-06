@@ -97,21 +97,22 @@ const Spine = memo(function Spine() {
       </div>
       <div className="spine spine-r">
         <div className="mark-run">
-          {[0, 1].map((copy) =>
-            SPINE_MARKS.map((mark) => (
-              <a
-                key={`${copy}-${mark.id}`}
-                href={`https://www.coingecko.com/en/coins/${mark.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={copy === 0 ? undefined : -1}
-                aria-hidden={copy === 1 ? true : undefined}
-                aria-label={`${mark.name} on CoinGecko`}
-              >
-                <img src={mark.src} alt="" width="28" height="28" />
-              </a>
-            )),
-          )}
+          {[0, 1].map((copy) => (
+            <div className="mark-set" key={copy} aria-hidden={copy === 1 ? true : undefined}>
+              {SPINE_MARKS.map((mark) => (
+                <a
+                  key={mark.id}
+                  href={`https://www.coingecko.com/en/coins/${mark.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={copy === 0 ? undefined : -1}
+                  aria-label={`${mark.name} on CoinGecko`}
+                >
+                  <img src={mark.src} alt="" width="28" height="28" />
+                </a>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </>
