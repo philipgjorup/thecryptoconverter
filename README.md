@@ -6,7 +6,7 @@ The live page is [thecryptoconverter.com](https://thecryptoconverter.com). The s
 
 ## Coins
 
-Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, and Zano.
+Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Zano, and Railgun.
 
 Satoshis are bitcoin divided by 100,000,000. There is no separate satoshi market.
 
@@ -23,7 +23,7 @@ Two things do leave the browser:
 
 This uses CoinGecko’s public `simple/price` API with no API key. The page asks again about once a minute while it is open, and it skips a repeat if the last good answer was under 15 seconds ago.
 
-The number is CoinGecko’s aggregated price, not the last trade on one exchange. A small difference against Binance, Kraken, or another book is normal. The sheet shows the source and how long ago it was fetched. **CoinGecko** means the public API answered. **daily backup** means it did not, so the figure can be a day old, and Hyperliquid can be missing.
+The number is CoinGecko’s aggregated price, not the last trade on one exchange. A small difference against Binance, Kraken, or another book is normal. The sheet shows the source and how long ago it was fetched. **CoinGecko** means the public API answered. **daily backup** means it did not, so the figure can be a day old, and Hyperliquid, Zano, and Railgun can be missing.
 
 To check a price, open the coin’s logo on a wide screen. It goes to that coin’s CoinGecko page. Satoshis open the Bitcoin page.
 

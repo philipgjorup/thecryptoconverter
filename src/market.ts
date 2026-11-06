@@ -30,6 +30,7 @@ export const COINS: Asset[] = [
   { id: 'hype', label: 'HYPE', name: 'Hyperliquid', kind: 'coin', gecko: 'hyperliquid', mark: '/marks/hype.svg' },
   { id: 'near', label: 'NEAR', name: 'NEAR', kind: 'coin', gecko: 'near', mark: '/marks/near.svg' },
   { id: 'zano', label: 'ZANO', name: 'Zano', kind: 'coin', gecko: 'zano', mark: '/marks/zano.svg' },
+  { id: 'rail', label: 'RAIL', name: 'Railgun', kind: 'coin', gecko: 'railgun', mark: '/marks/rail.jpg' },
 ]
 
 export const FIATS: Asset[] = [

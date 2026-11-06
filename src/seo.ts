@@ -17,7 +17,7 @@ export const FAQ = [
   {
     question: 'Which cryptocurrencies can I convert?',
     answer:
-      'Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, and Zano.',
+      'Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Zano, and Railgun.',
   },
   {
     question: 'Which currencies does the converter include?',
@@ -31,7 +31,7 @@ export const FAQ = [
   {
     question: 'Where do the crypto prices come from?',
     answer:
-      'CoinGecko, refreshed about once a minute. If CoinGecko does not answer, the sheet uses a daily public backup feed instead. Hyperliquid can be missing on that backup.',
+      'CoinGecko, refreshed about once a minute. If CoinGecko does not answer, the sheet uses a daily public backup feed instead. Hyperliquid, Zano, and Railgun can be missing on that backup.',
   },
 ] as const
 
