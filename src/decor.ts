@@ -1,4 +1,5 @@
 import { COINS } from './market'
+import { TOP_MARKS } from './topMarks'
 
 /** CoinGecko top 100 by market cap, 5 Nov 2026. Decorative only. */
 export const TOP_100 = [
@@ -22,8 +23,16 @@ export const SPINE_LINE = [
   ...TOP_100,
 ].join(' · ')
 
-export const COIN_MARKS = COINS.flatMap((coin) => {
-  const slug = coin.page ?? coin.gecko
-  if (!coin.mark || !slug) return []
-  return [{ id: coin.id, name: coin.name, src: coin.mark, slug }]
-})
+/**
+ * Logos that run along the right side. Converter coins already in the top 100
+ * are not repeated, and satoshis are left out so Bitcoin is not shown twice.
+ */
+export const SPINE_MARKS = [
+  ...COINS.flatMap((coin) => {
+    if (coin.id === 'sats' || !coin.mark || ranked.has(coin.label)) return []
+    const slug = coin.page ?? coin.gecko
+    if (!slug) return []
+    return [{ id: coin.id, name: coin.name, src: coin.mark, slug }]
+  }),
+  ...TOP_MARKS,
+]

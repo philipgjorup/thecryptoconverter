@@ -29,7 +29,7 @@ To check a price, open the coin’s logo on a wide screen. It goes to that coin�
 
 ## Add a coin
 
-Add one entry to `COINS` in `src/market.ts`, with its CoinGecko id in `gecko` and a logo file in `public/marks`. The logo appears on the right and links to that coin’s CoinGecko page. The ticker joins the left column when it is not already in the top 100.
+Add one entry to `COINS` in `src/market.ts`, with its CoinGecko id in `gecko` and a logo file in `public/marks`. On a wide screen the right column is the top 100, each logo the same size and linked to that coin’s CoinGecko page. A coin already in that list is not shown again, and satoshis are left out so Bitcoin appears once. Any other new coin is added to the column, and its ticker joins the left side.
 
 ## License
 

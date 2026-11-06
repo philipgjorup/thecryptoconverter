@@ -13,7 +13,7 @@ export type Asset = {
   mark?: string
 }
 
-/** Add a coin here. `gecko` is its CoinGecko id and `mark` is its logo. The logo shows on the right, and the ticker joins the left column when it is not already in the top 100. */
+/** Add a coin here. `gecko` is its CoinGecko id and `mark` is its logo. A coin already in the top 100 keeps that logo, so it is not added again. Satoshis share Bitcoin’s logo and are not shown a second time. Any other new coin joins the right column, and its ticker joins the left. */
 export const COINS: Asset[] = [
   { id: 'btc', label: 'BTC', name: 'Bitcoin', kind: 'coin', gecko: 'bitcoin', mark: '/marks/btc.svg' },
   { id: 'sats', label: 'SATS', name: 'Satoshis', kind: 'coin', page: 'bitcoin', mark: '/marks/btc.svg' },
