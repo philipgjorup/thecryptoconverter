@@ -6,7 +6,7 @@ The live page is [thecryptoconverter.com](https://thecryptoconverter.com). The s
 
 ## Coins
 
-Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Dogecoin, Zcash, Monero, Hyperliquid, NEAR, Chainlink, Cardano, Bitcoin Cash, Stellar, Uniswap, Litecoin, Avalanche, Bittensor, Toncoin, Sui, Polkadot, Zano, and Railgun.
+Listed by market cap: Bitcoin, satoshis, Ethereum, Tether, BNB, XRP, USD Coin, Solana, TRON, Zcash, Hyperliquid, Monero, Dogecoin, Chainlink, Cardano, Bitcoin Cash, Stellar, NEAR, Uniswap, Litecoin, Avalanche, Sui, Toncoin, Bittensor, Polkadot, Railgun, and Zano.
 
 Satoshis are bitcoin divided by 100,000,000. There is no separate satoshi market.
 
@@ -29,7 +29,7 @@ To check a price, open the coin’s logo on a wide screen. It goes to that coin�
 
 ## Add a coin
 
-Add one entry to `COINS` in `src/market.ts`, with its CoinGecko id in `gecko` and a logo file in `public/marks`. On a wide screen the right column is the top 100, each logo the same size and linked to that coin’s CoinGecko page. A coin already in that list is not shown again, and satoshis are left out so Bitcoin appears once. Any other new coin is added to the column, and its ticker joins the left side.
+Add one entry to `COINS` in `src/market.ts`, in market-cap order, with its CoinGecko id in `gecko` and a logo file in `public/marks`. On a wide screen the right column is the top 100, each logo the same size and linked to that coin’s CoinGecko page. A coin already in that list is not shown again, and satoshis are left out so Bitcoin appears once. Any other new coin is added to the column, and its ticker joins the left side.
 
 ## License
 

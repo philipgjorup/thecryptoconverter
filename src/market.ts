@@ -13,7 +13,7 @@ export type Asset = {
   mark?: string
 }
 
-/** Add a coin here. `gecko` is its CoinGecko id and `mark` is its logo. A coin already in the top 100 keeps that logo, so it is not added again. Satoshis share Bitcoin’s logo and are not shown a second time. Any other new coin joins the right column, and its ticker joins the left. */
+/** Add a coin here, in market-cap order. `gecko` is its CoinGecko id and `mark` is its logo. A coin already in the top 100 keeps that logo, so it is not added again. Satoshis share Bitcoin’s logo and are not shown a second time; they stay beside Bitcoin. Any other new coin joins the right column, and its ticker joins the left. */
 export const COINS: Asset[] = [
   { id: 'btc', label: 'BTC', name: 'Bitcoin', kind: 'coin', gecko: 'bitcoin', mark: '/marks/btc.svg' },
   { id: 'sats', label: 'SATS', name: 'Satoshis', kind: 'coin', page: 'bitcoin', mark: '/marks/btc.svg' },
@@ -24,24 +24,24 @@ export const COINS: Asset[] = [
   { id: 'usdc', label: 'USDC', name: 'USD Coin', kind: 'coin', gecko: 'usd-coin', mark: '/marks/usdc.svg' },
   { id: 'sol', label: 'SOL', name: 'Solana', kind: 'coin', gecko: 'solana', mark: '/marks/sol.svg' },
   { id: 'trx', label: 'TRX', name: 'TRON', kind: 'coin', gecko: 'tron', mark: '/marks/trx.svg' },
-  { id: 'doge', label: 'DOGE', name: 'Dogecoin', kind: 'coin', gecko: 'dogecoin', mark: '/marks/doge.svg' },
   { id: 'zec', label: 'ZEC', name: 'Zcash', kind: 'coin', gecko: 'zcash', mark: '/marks/zec.svg' },
-  { id: 'xmr', label: 'XMR', name: 'Monero', kind: 'coin', gecko: 'monero', mark: '/marks/xmr.svg' },
   { id: 'hype', label: 'HYPE', name: 'Hyperliquid', kind: 'coin', gecko: 'hyperliquid', mark: '/marks/hype.svg' },
-  { id: 'near', label: 'NEAR', name: 'NEAR', kind: 'coin', gecko: 'near', mark: '/marks/near.svg' },
+  { id: 'xmr', label: 'XMR', name: 'Monero', kind: 'coin', gecko: 'monero', mark: '/marks/xmr.svg' },
+  { id: 'doge', label: 'DOGE', name: 'Dogecoin', kind: 'coin', gecko: 'dogecoin', mark: '/marks/doge.svg' },
   { id: 'link', label: 'LINK', name: 'Chainlink', kind: 'coin', gecko: 'chainlink', mark: '/marks/top/link.svg' },
   { id: 'ada', label: 'ADA', name: 'Cardano', kind: 'coin', gecko: 'cardano', mark: '/marks/top/ada.svg' },
   { id: 'bch', label: 'BCH', name: 'Bitcoin Cash', kind: 'coin', gecko: 'bitcoin-cash', mark: '/marks/top/bch.svg' },
   { id: 'xlm', label: 'XLM', name: 'Stellar', kind: 'coin', gecko: 'stellar', mark: '/marks/top/xlm.svg' },
+  { id: 'near', label: 'NEAR', name: 'NEAR', kind: 'coin', gecko: 'near', mark: '/marks/near.svg' },
   { id: 'uni', label: 'UNI', name: 'Uniswap', kind: 'coin', gecko: 'uniswap', mark: '/marks/top/uni.svg' },
   { id: 'ltc', label: 'LTC', name: 'Litecoin', kind: 'coin', gecko: 'litecoin', mark: '/marks/top/ltc.svg' },
   { id: 'avax', label: 'AVAX', name: 'Avalanche', kind: 'coin', gecko: 'avalanche-2', mark: '/marks/top/avax.svg' },
-  { id: 'tao', label: 'TAO', name: 'Bittensor', kind: 'coin', gecko: 'bittensor', mark: '/marks/top/tao.svg' },
-  { id: 'ton', label: 'TON', name: 'Toncoin', kind: 'coin', gecko: 'the-open-network', mark: '/marks/top/gram.png' },
   { id: 'sui', label: 'SUI', name: 'Sui', kind: 'coin', gecko: 'sui', mark: '/marks/top/sui.svg' },
+  { id: 'ton', label: 'TON', name: 'Toncoin', kind: 'coin', gecko: 'the-open-network', mark: '/marks/top/gram.png' },
+  { id: 'tao', label: 'TAO', name: 'Bittensor', kind: 'coin', gecko: 'bittensor', mark: '/marks/top/tao.svg' },
   { id: 'dot', label: 'DOT', name: 'Polkadot', kind: 'coin', gecko: 'polkadot', mark: '/marks/top/dot.svg' },
-  { id: 'zano', label: 'ZANO', name: 'Zano', kind: 'coin', gecko: 'zano', mark: '/marks/zano.svg' },
   { id: 'rail', label: 'RAIL', name: 'Railgun', kind: 'coin', gecko: 'railgun', mark: '/marks/rail.jpg' },
+  { id: 'zano', label: 'ZANO', name: 'Zano', kind: 'coin', gecko: 'zano', mark: '/marks/zano.svg' },
 ]
 
 export const FIATS: Asset[] = [
