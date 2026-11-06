@@ -179,8 +179,12 @@ export function App() {
   const noticeTimer = useRef(0)
 
   useEffect(() => {
+    const color = night ? '#090a07' : '#0000F0'
     document.documentElement.dataset.theme = night ? 'night' : 'day'
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', night ? '#090a07' : '#0000F0')
+    document.documentElement.style.colorScheme = night ? 'dark' : 'light'
+    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+      meta.setAttribute('content', color)
+    })
   }, [night])
 
   useEffect(() => {

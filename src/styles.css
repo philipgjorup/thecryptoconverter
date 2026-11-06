@@ -76,11 +76,20 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  min-height: 100dvh;
   overflow-x: clip;
-  background:
-    linear-gradient(var(--bar), var(--bar)) top / 100% env(safe-area-inset-top) no-repeat,
-    var(--paper);
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--bar), var(--bar)), linear-gradient(var(--paper), var(--paper));
+  background-repeat: no-repeat;
+  background-position: top, bottom;
+  background-size: 100% env(safe-area-inset-top), 100% env(safe-area-inset-bottom);
   color: var(--ink);
+}
+
+html[data-theme="night"],
+html[data-theme="night"] body {
+  background-color: #090a07;
+  background-image: none;
 }
 
 body {
