@@ -162,7 +162,8 @@ button {
 
 .status button:focus-visible,
 .kind-switch button:focus-visible,
-.chip:focus-visible,
+.asset-name:focus-visible,
+.asset-option:focus-visible,
 .quote:focus-visible,
 .copy-btn:focus-visible,
 .also-toggle:focus-visible,
@@ -216,8 +217,39 @@ button {
   border-bottom-color: var(--blue);
 }
 
+.picker {
+  position: relative;
+  margin-top: 12px;
+}
+
+.picker.is-open {
+  z-index: 5;
+}
+
 .asset-name {
-  margin: 12px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+}
+
+.asset-name::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--blue);
+}
+
+.picker.is-open .asset-name::after {
+  transform: scaleY(-1);
+}
+
+.asset-title {
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
   font-style: italic;
   font-weight: 800;
@@ -228,7 +260,7 @@ button {
   color: var(--blue);
 }
 
-.asset-name span {
+.asset-title span {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-style: normal;
   font-weight: 400;
@@ -236,6 +268,43 @@ button {
   letter-spacing: 0;
   text-transform: none;
   color: var(--ink);
+}
+
+.asset-list {
+  margin-top: 8px;
+  max-height: 280px;
+  overflow: auto;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--blue);
+}
+
+.asset-option {
+  display: grid;
+  grid-template-columns: 4.2rem minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  text-align: left;
+  font-size: 13px;
+  border-bottom: 1px solid var(--line);
+}
+
+.asset-option:last-child {
+  border-bottom: 0;
+}
+
+.asset-option[aria-selected='true'],
+.asset-option:hover {
+  background: var(--blue);
+  color: var(--paper);
+}
+
+.asset-code {
+  font-size: 12px;
+  letter-spacing: 0.08em;
 }
 
 .kind-switch {
@@ -263,34 +332,8 @@ button {
 
 .convert-hint {
   margin: 12px 0 0;
-  max-width: 36ch;
   font-size: 12px;
   line-height: 1.45;
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 14px;
-}
-
-.chip {
-  min-height: 40px;
-  padding: 0 10px;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: var(--ink);
-}
-
-.chip[aria-pressed='true'] {
-  background: var(--blue);
-  color: var(--paper);
-}
-
-.chip:hover {
-  background: var(--blue);
-  color: var(--paper);
 }
 
 .field {
@@ -744,29 +787,6 @@ footer a {
   .quote {
     min-height: 64px;
     padding: 14px 10px;
-  }
-}
-
-@media (max-width: 720px) {
-  .chips {
-    flex-wrap: nowrap;
-    gap: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 28px), transparent);
-  }
-
-  .chip {
-    padding: 0 12px;
-    letter-spacing: 0.06em;
-  }
-
-  .chips::-webkit-scrollbar {
-    display: none;
-  }
-
-  .chip {
-    flex: 0 0 auto;
   }
 }
 

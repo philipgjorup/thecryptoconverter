@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import {
   ASSET_MAP,
   COINS,
@@ -168,8 +168,9 @@ export function App() {
   const [phase, setPhase] = useState<'loading' | 'ready' | 'error'>(readCache() ? 'ready' : 'loading')
   const [notice, setNotice] = useState<string | null>(null)
   const [hot, setHot] = useState<string | null>(null)
+  const [pickerOpen, setPickerOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-  const chipsRef = useRef<HTMLDivElement>(null)
+  const pickerRef = useRef<HTMLDivElement>(null)
   const noticeTimer = useRef(0)
 
   useEffect(() => {
@@ -183,12 +184,34 @@ export function App() {
   }, [amount, from, into])
 
   useEffect(() => {
-    const root = chipsRef.current
-    const chip = root?.querySelector<HTMLElement>('[aria-pressed="true"]')
-    if (!root || !chip) return
-    const left = chip.offsetLeft - (root.clientWidth - chip.offsetWidth) / 2
-    root.scrollTo({ left: Math.max(0, left) })
+    if (!pickerOpen) return
+    const list = pickerRef.current?.querySelector<HTMLElement>('.asset-list')
+    const selected = list?.querySelector<HTMLButtonElement>('[aria-selected="true"]')
+    if (!list || !selected) return
+    const top = selected.offsetTop
+    list.scrollTop = Math.max(0, top - list.clientHeight / 2 + selected.offsetHeight / 2)
+    selected.focus()
+  }, [pickerOpen])
+
+  useEffect(() => {
+    setPickerOpen(false)
   }, [from])
+
+  useEffect(() => {
+    if (!pickerOpen) return
+    function onPointerDown(event: PointerEvent) {
+      if (!pickerRef.current?.contains(event.target as Node)) setPickerOpen(false)
+    }
+    function onKeyDown(event: globalThis.KeyboardEvent) {
+      if (event.key === 'Escape') setPickerOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [pickerOpen])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -246,6 +269,22 @@ export function App() {
   const featuredValue = price(featured)
   const intoWords = source.kind === 'coin' ? 'currency' : 'coins'
   const sameWords = source.kind === 'coin' ? 'other coins' : 'other currencies'
+
+  function onPickerKey(event: KeyboardEvent<HTMLDivElement>) {
+    const options = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="option"]')]
+    const index = options.findIndex((option) => option === document.activeElement)
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault()
+      const next = event.key === 'ArrowDown' ? Math.min(options.length - 1, index + 1) : Math.max(0, index - 1)
+      options[next]?.focus()
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      options[0]?.focus()
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      options[options.length - 1]?.focus()
+    }
+  }
 
   function chooseKind(kind: Kind) {
     if (source.kind === kind) return
@@ -337,25 +376,51 @@ export function App() {
             </div>
             <p id="convert-hint" className="convert-hint">
               {source.kind === 'coin'
-                ? 'Pick the coin. The blue sheet shows that amount in currency.'
-                : 'Pick the currency. The blue sheet shows that amount in coins.'}
+                ? 'The blue sheet shows that amount in currency.'
+                : 'The blue sheet shows that amount in coins.'}
             </p>
-            <p className="asset-name">
-              {source.name}
-              {source.id === 'sats' && <span> · 100,000,000 per bitcoin</span>}
-            </p>
-            <div className="chips" role="group" aria-label={source.kind === 'coin' ? 'Coins' : 'Currencies'} ref={chipsRef}>
-              {(source.kind === 'coin' ? COINS : FIATS).map((asset) => (
-                <button
-                  key={asset.id}
-                  type="button"
-                  className="chip"
-                  aria-pressed={asset.id === from}
-                  onClick={() => setFrom(asset.id)}
+            <div className={pickerOpen ? 'picker is-open' : 'picker'} ref={pickerRef}>
+              <button
+                type="button"
+                className="asset-name"
+                aria-expanded={pickerOpen}
+                aria-controls="asset-list"
+                aria-haspopup="listbox"
+                onClick={() => setPickerOpen((open) => !open)}
+              >
+                <span className="asset-title">
+                  {source.name}
+                  {source.id === 'sats' && <span> · 100,000,000 per bitcoin</span>}
+                </span>
+              </button>
+              {pickerOpen && (
+                <div
+                  id="asset-list"
+                  className="asset-list"
+                  role="listbox"
+                  aria-label={source.kind === 'coin' ? 'Coins' : 'Currencies'}
+                  onKeyDown={onPickerKey}
                 >
-                  {asset.label}
-                </button>
-              ))}
+                  {(source.kind === 'coin' ? COINS : FIATS).map((asset) => (
+                    <button
+                      key={asset.id}
+                      type="button"
+                      role="option"
+                      aria-selected={asset.id === from}
+                      className="asset-option"
+                      onClick={() => {
+                        setFrom(asset.id)
+                        setPickerOpen(false)
+                      }}
+                    >
+                      <span className="asset-code" translate="no">
+                        {asset.label}
+                      </span>
+                      <span>{asset.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
 
