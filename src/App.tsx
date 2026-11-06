@@ -17,17 +17,6 @@ import {
 import { SPINE_LINE, SPINE_MARKS } from './decor'
 import { FAQ, PAGE_DESCRIPTION, SPONSOR } from './seo'
 
-const WAVE_PATHS = Array.from({ length: 16 }, (_, i) => {
-  const y = 28 + i * 46
-  const amp = 8 + (i % 4) * 4
-  let d = `M0 ${y}`
-  for (let x = 0; x <= 1200; x += 24) {
-    const yy = y + Math.sin((x + i * 37) / (78 + (i % 3) * 18)) * amp
-    d += `L${x} ${yy.toFixed(1)}`
-  }
-  return d
-})
-
 function readNight() {
   try {
     const stored = localStorage.getItem('rate:theme')
@@ -461,12 +450,7 @@ export function App() {
           </section>
 
           <section className="field" aria-label={`In ${intoWords}`}>
-            <svg className="waves" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
-              {WAVE_PATHS.map((d) => (
-                <path key={d} d={d} />
-              ))}
-            </svg>
-            <div className="shade" aria-hidden="true" />
+            <img className="sheet-mark" src="/marks/rider.png" alt="" />
             <div className="field-body">
               <div className="field-head">
                 <h2>In {intoWords}</h2>
