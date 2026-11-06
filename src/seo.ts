@@ -1,13 +1,13 @@
 export const PAGE_TITLE = 'Crypto Converter — BTC, ETH, SOL to USD, EUR, JPY'
 
 export const PAGE_DESCRIPTION =
-  'Convert Bitcoin, satoshis, Ethereum, Solana, XRP, and other coins into dollars, euro, yen, yuan, colón, and kroner. No account. Your amount stays in the browser.'
+  'Convert Bitcoin, satoshis, Ethereum, Solana, XRP, and other coins into dollars, euro, pounds, yen, yuan, Australian and Canadian dollars, colón, and kroner. No account. Your amount stays in the browser.'
 
 export const FAQ = [
   {
     question: 'What does this crypto converter do?',
     answer:
-      'It converts Bitcoin, satoshis, Ethereum, Solana, XRP, BNB, and other coins into US dollars, euro, yen, yuan, Costa Rican colón, and Danish krone. Type an amount, pick a coin or a currency, and the rest of the sheet updates at once.',
+      'It converts Bitcoin, satoshis, Ethereum, Solana, XRP, BNB, and other coins into US dollars, euro, yen, yuan, British pounds, Australian dollars, Canadian dollars, Costa Rican colón, and Danish krone. Type an amount, pick a coin or a currency, and the rest of the sheet updates at once.',
   },
   {
     question: 'How many satoshis are in one bitcoin?',
@@ -21,7 +21,7 @@ export const FAQ = [
   },
   {
     question: 'Which currencies does the converter include?',
-    answer: 'US dollars, euro, yen, yuan, Costa Rican colón (CRC), and Danish krone (DKK).',
+    answer: 'US dollars, euro, yen, yuan, British pounds (GBP), Australian dollars (AUD), Canadian dollars (CAD), Costa Rican colón (CRC), and Danish krone (DKK).',
   },
   {
     question: 'Does the amount I type get uploaded?',

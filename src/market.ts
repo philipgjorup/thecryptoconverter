@@ -46,6 +46,9 @@ export const FIATS: Asset[] = [
   { id: 'eur', label: 'EURO', name: 'Euro', kind: 'fiat' },
   { id: 'jpy', label: 'YEN', name: 'Yen', kind: 'fiat' },
   { id: 'cny', label: 'YUAN', name: 'Yuan', kind: 'fiat' },
+  { id: 'gbp', label: 'GBP', name: 'British pound', kind: 'fiat' },
+  { id: 'aud', label: 'AUD', name: 'Australian dollar', kind: 'fiat' },
+  { id: 'cad', label: 'CAD', name: 'Canadian dollar', kind: 'fiat' },
   { id: 'crc', label: 'CRC', name: 'Colón', kind: 'fiat' },
   { id: 'dkk', label: 'DKK', name: 'Danish krone', kind: 'fiat' },
 ]
@@ -56,7 +59,7 @@ export const ASSET_MAP: Record<string, Asset> = Object.fromEntries(
   ASSETS.map((asset) => [asset.id, asset]),
 )
 
-const FIAT_IDS = ['usd', 'eur', 'jpy', 'cny', 'crc', 'dkk'] as const
+const FIAT_IDS = ['usd', 'eur', 'jpy', 'cny', 'gbp', 'aud', 'cad', 'crc', 'dkk'] as const
 
 const COINGECKO_IDS: Record<string, string> = Object.fromEntries(
   COINS.flatMap((coin) => (coin.gecko ? [[coin.id, coin.gecko]] : [])),

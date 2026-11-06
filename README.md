@@ -1,6 +1,6 @@
 # Crypto Converter
 
-An open-source converter for the coins on the sheet, priced in US dollars, euro, yen, yuan, Costa Rican colón, and Danish krone.
+An open-source converter for the coins on the sheet, priced in US dollars, euro, yen, yuan, British pounds, Australian dollars, Canadian dollars, Costa Rican colón, and Danish krone.
 
 The live page is [thecryptoconverter.com](https://thecryptoconverter.com). The source is MIT licensed.
 
