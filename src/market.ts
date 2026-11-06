@@ -16,7 +16,7 @@ export type Asset = {
 /** Add a coin here. `gecko` is its CoinGecko id and `mark` is its logo. The logo shows on the right, and the ticker joins the left column when it is not already in the top 100. */
 export const COINS: Asset[] = [
   { id: 'btc', label: 'BTC', name: 'Bitcoin', kind: 'coin', gecko: 'bitcoin', mark: '/marks/btc.svg' },
-  { id: 'sats', label: 'SATS', name: 'Satoshis', kind: 'coin', page: 'bitcoin', mark: '/marks/sats.svg' },
+  { id: 'sats', label: 'SATS', name: 'Satoshis', kind: 'coin', page: 'bitcoin', mark: '/marks/btc.svg' },
   { id: 'eth', label: 'ETH', name: 'Ethereum', kind: 'coin', gecko: 'ethereum', mark: '/marks/eth.svg' },
   { id: 'usdt', label: 'USDT', name: 'Tether', kind: 'coin', gecko: 'tether', mark: '/marks/usdt.svg' },
   { id: 'bnb', label: 'BNB', name: 'BNB', kind: 'coin', gecko: 'binancecoin', mark: '/marks/bnb.svg' },

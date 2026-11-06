@@ -27,15 +27,6 @@ The number is CoinGecko’s aggregated price, not the last trade on one exchange
 
 To check a price, open the coin’s logo on a wide screen. It goes to that coin’s CoinGecko page. Satoshis open the Bitcoin page.
 
-## Run it locally
-
-```bash
-npm install
-npm run dev
-```
-
-Open the address Vite prints. `npm run check` tests the conversion math, and `npm run build` makes the production site.
-
 ## Add a coin
 
 Add one entry to `COINS` in `src/market.ts`, with its CoinGecko id in `gecko` and a logo file in `public/marks`. The logo appears on the right and links to that coin’s CoinGecko page. The ticker joins the left column when it is not already in the top 100.
